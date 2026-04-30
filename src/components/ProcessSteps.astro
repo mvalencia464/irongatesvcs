@@ -1,0 +1,103 @@
+---
+interface Step {
+  title: string;
+  description: string;
+}
+
+interface Props {
+  steps: Step[];
+  title?: string;
+  subtitle?: string;
+}
+
+const { 
+  steps, 
+  title = "Our Simple Process", 
+  subtitle = "How we get your home back in shape, from start to finish." 
+} = Astro.props;
+---
+
+<section class="steps-section">
+  <div class="steps-header">
+    <span class="section-label">The Workflow</span>
+    <h2>{title}</h2>
+    <p>{subtitle}</p>
+  </div>
+
+  <div class="steps-grid">
+    {steps.map((step, index) => (
+      <div class="step-card panel-card u-hover-lift">
+        <div class="step-number">{String(index + 1).padStart(2, '0')}</div>
+        <h3>{step.title}</h3>
+        <p>{step.description}</p>
+        {index < steps.length - 1 && <div class="step-connector"></div>}
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .steps-section {
+    width: 100%;
+  }
+
+  .steps-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .steps-header p {
+    color: var(--muted);
+    margin: 1rem auto 0;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    position: relative;
+  }
+
+  .step-card {
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: var(--accent2);
+    line-height: 1;
+    margin-bottom: 1rem;
+    opacity: 0.3;
+  }
+
+  .step-card h3 {
+    font-size: 1.5rem;
+    color: var(--text);
+    margin-bottom: 0.8rem;
+  }
+
+  .step-card p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .step-connector {
+    position: absolute;
+    top: 50%;
+    right: -1.5rem;
+    width: 1rem;
+    height: 1px;
+    background: var(--border);
+    z-index: -1;
+  }
+
+  @media (max-width: 1024px) {
+    .step-connector {
+      display: none;
+    }
+  }
+</style>

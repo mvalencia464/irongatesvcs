@@ -1,0 +1,125 @@
+---
+// src/layouts/BaseLayout.astro
+import { SITE } from '../config/site';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title       = SITE.seoTitle,
+  description = SITE.seoDescription,
+  image       = '/og-image.jpg',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://example.com').href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords"    content={SITE.seoKeywords} />
+    <link rel="canonical"    href={canonical} />
+    <link rel="preconnect" href="https://media.stokeleads.com" />
+    <link rel="dns-prefetch" href="//media.stokeleads.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Open Graph -->
+    <meta property="og:title"       content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image"       content={image} />
+    <meta property="og:type"        content="website" />
+    <meta property="og:url"         content={canonical} />
+
+    <!-- Local Business JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": SITE.name,
+      "telephone": SITE.phone,
+      "email": SITE.email,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": SITE.addressLine1,
+        "addressLocality": SITE.city,
+        "addressRegion": SITE.state,
+        "addressCountry": "US"
+      },
+      "url": canonical,
+      "description": SITE.seoDescription,
+    })} />
+
+    <!-- Design tokens from config -->
+    <style define:vars={{
+      deep: SITE.palette.deep,
+      surface: SITE.palette.surface,
+      panel: SITE.palette.panel,
+      panel2: SITE.palette.panel2,
+      border: SITE.palette.border,
+      accent: SITE.palette.accent,
+      accent2: SITE.palette.accent2,
+      gold: SITE.palette.gold,
+      text: SITE.palette.text,
+      muted: SITE.palette.muted,
+    }}>
+      :root {
+        --deep: var(--deep);
+        --surface: var(--surface);
+        --panel: var(--panel);
+        --panel2: var(--panel2);
+        --border: var(--border);
+        --accent: var(--accent);
+        --accent2: var(--accent2);
+        --gold: var(--gold);
+        --text: var(--text);
+        --muted: var(--muted);
+      }
+    </style>
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+
+  <body>
+    <slot />
+
+    <!-- Sticky phone CTA on mobile -->
+    <a class="mobile-cta" href={`tel:${SITE.phone.replace(/\D/g,'')}`}>
+      Call {SITE.phone}
+    </a>
+  </body>
+</html>
+
+<style>
+  .mobile-cta {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(15, 23, 42, 0.96);
+    color: var(--text);
+    border-top: 1px solid var(--border);
+    backdrop-filter: blur(8px);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-align: center;
+    padding: 0.9rem 1rem;
+    z-index: 999;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  @media (max-width: 768px) {
+    .mobile-cta { display: block; }
+  }
+</style>

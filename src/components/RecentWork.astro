@@ -1,0 +1,109 @@
+---
+import { r2img } from '../lib/r2';
+
+interface Project {
+  title: string;
+  category: string;
+  image: string;
+}
+
+interface Props {
+  projects: Project[];
+  title?: string;
+}
+
+const { projects, title = "Recent Transformations" } = Astro.props;
+---
+
+<section class="work-section">
+  <div class="section-header">
+    <span class="section-label">Gallery</span>
+    <h2>{title}</h2>
+  </div>
+
+  <div class="work-grid">
+    {projects.map(project => (
+      <div class="work-card">
+        <div class="work-image">
+          <img src={r2img(project.image)} alt={project.title} loading="lazy" />
+          <div class="work-overlay">
+            <span class="work-category">{project.category}</span>
+            <h3>{project.title}</h3>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .work-section {
+    width: 100%;
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1rem;
+  }
+
+  .work-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 300px;
+    cursor: pointer;
+  }
+
+  .work-image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .work-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .work-card:hover .work-image img {
+    transform: scale(1.1);
+  }
+
+  .work-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(6, 13, 20, 0.9) 0%, rgba(6, 13, 20, 0) 70%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+    transition: background 0.3s ease;
+  }
+
+  .work-card:hover .work-overlay {
+    background: linear-gradient(0deg, rgba(91, 196, 232, 0.4) 0%, rgba(6, 13, 20, 0.2) 100%);
+  }
+
+  .work-category {
+    color: var(--accent2);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .work-overlay h3 {
+    color: var(--text);
+    font-size: 1.8rem;
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .work-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

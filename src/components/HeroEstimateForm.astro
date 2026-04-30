@@ -1,0 +1,174 @@
+---
+import { SITE } from '../config/site';
+import { r2img } from '../lib/r2';
+---
+
+<form class="estimate-form" name="hero-estimate" method="POST" action="/thanks">
+  <input type="hidden" name="form-name" value="hero-estimate" />
+  <h3 class="estimate-form__title">Request Your Free Quote</h3>
+  <p class="estimate-form__copy">Tell us what you need—repairs, drone work, or rental turnover—and we will follow up with clear next steps.</p>
+  <input class="estimate-form__field" type="text" name="name" placeholder="Full Name" required aria-label="Full Name" />
+  <input class="estimate-form__field" type="tel" name="phone" placeholder="Phone Number" required aria-label="Phone Number" />
+  <input class="estimate-form__field" type="email" name="email" placeholder="Email Address" required aria-label="Email Address" />
+  <input class="estimate-form__field" type="text" name="address" placeholder="Property Address" required aria-label="Property Address" />
+  <label class="estimate-form__checkbox">
+    <input type="checkbox" name="consent_project_sms" required />
+    <span>
+      I agree to {SITE.name}'s
+      <a href="/terms"> Terms</a> and
+      <a href="/policy"> Privacy Policy</a>, and I consent to project-related texts. Msg &amp; data rates may apply.
+    </span>
+  </label>
+  <label class="estimate-form__checkbox">
+    <input type="checkbox" name="consent_marketing_sms" required />
+    <span>
+      I consent to recurring marketing texts from {SITE.name}. Consent is not required to purchase. Reply STOP to opt out.
+    </span>
+  </label>
+  <button type="submit" class="btn btn--primary estimate-form__submit">Request Estimate</button>
+  <div class="estimate-form__contact">
+    {SITE.owner.headshot ? (
+      <img src={r2img(SITE.owner.headshot)} alt={`${SITE.owner.name}, owner of ${SITE.name}`} loading="lazy" width="34" height="34" />
+    ) : null}
+    <div class="estimate-form__contact-copy">
+      <strong>{SITE.owner.name}</strong>
+      <span>will contact you directly</span>
+    </div>
+  </div>
+</form>
+
+<style>
+  .estimate-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1.35rem 1.2rem 1.2rem;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(160deg, rgba(30, 41, 59, 0.94), rgba(15, 23, 42, 0.94));
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 22px 44px rgba(6, 12, 24, 0.45);
+    overflow: hidden;
+  }
+
+  .estimate-form::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 3px;
+    border-radius: 14px 14px 0 0;
+    background: linear-gradient(90deg, rgba(245, 158, 11, 0.95), rgba(245, 158, 11, 0.2));
+    pointer-events: none;
+  }
+
+  .estimate-form__title {
+    color: var(--text);
+    font-size: 1.45rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .estimate-form__copy {
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.55;
+    margin-bottom: 0.45rem;
+  }
+
+  .estimate-form__field {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: rgba(8, 16, 34, 0.72);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    padding: 0.78rem 0.9rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  }
+
+  .estimate-form__field:focus {
+    outline: none;
+    border-color: var(--accent2);
+    background: rgba(10, 24, 48, 0.9);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+  }
+
+  .estimate-form__checkbox {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    color: var(--muted);
+    font-size: 0.78rem;
+    line-height: 1.4;
+    margin: 0.1rem 0 0.25rem;
+  }
+
+  .estimate-form__checkbox input {
+    margin-top: 0.15rem;
+    accent-color: var(--accent2);
+  }
+
+  .estimate-form__checkbox a {
+    color: var(--accent2);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .estimate-form__submit {
+    width: 100%;
+    border-radius: 9px;
+    background: linear-gradient(135deg, var(--accent) 0%, #d97706 100%);
+    box-shadow: 0 12px 24px rgba(245, 158, 11, 0.25);
+  }
+
+  .estimate-form__submit:hover {
+    background: linear-gradient(135deg, var(--gold) 0%, #fcd34d 100%);
+    color: var(--deep);
+    box-shadow: 0 14px 28px rgba(251, 191, 36, 0.35);
+  }
+
+  .estimate-form__contact {
+    margin-top: 0.35rem;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.65rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: rgba(8, 18, 37, 0.46);
+  }
+
+  .estimate-form__contact img {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .estimate-form__contact-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.08rem;
+    max-width: none;
+  }
+
+  .estimate-form__contact-copy span {
+    color: var(--muted);
+    font-size: 0.73rem;
+    line-height: 1.35;
+    letter-spacing: 0.02em;
+  }
+
+  .estimate-form__contact-copy strong {
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.76rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+</style>

@@ -1,0 +1,258 @@
+---
+import { SITE } from '../config/site';
+import { r2img } from '../lib/r2';
+
+interface Props {
+  variant?: 'side' | 'horizontal' | 'split' | 'overlap';
+  title?: string;
+  subtitle?: string;
+  image?: string;
+}
+
+const { 
+  variant = 'side',
+  title = SITE.hero.heading,
+  subtitle = SITE.hero.subheading,
+  image = SITE.hero.image
+} = Astro.props;
+---
+
+<section class={`hero-form-section hero-form-section--${variant}`} style={`background-image: url('${r2img(image)}')`}>
+  <div class="hero-overlay"></div>
+  
+  <div class="container hero-container">
+    <div class="hero-content">
+      <div class="hero-badges">
+        {SITE.hero.badges.slice(0, 2).map(badge => <span class="badge">{badge}</span>)}
+      </div>
+      <h1>{title}</h1>
+      <p class="subtitle">{subtitle}</p>
+      
+      {variant === 'horizontal' && (
+        <div class="horizontal-form-wrap">
+          <form class="h-form">
+            <input type="text" placeholder="Name" required />
+            <input type="tel" placeholder="Phone" required />
+            <input type="text" placeholder="Address" required />
+            <button type="button" class="btn btn--primary">Get Quote</button>
+          </form>
+        </div>
+      )}
+    </div>
+
+    {variant !== 'horizontal' && (
+      <div class="form-container">
+        <div class="panel-card lead-form">
+          <div class="form-head">
+            <h3>Request Service</h3>
+            <p>Fast response guaranteed.</p>
+          </div>
+          <form>
+            <div class="form-grid">
+              <input type="text" placeholder="Full Name" required />
+              <input type="tel" placeholder="Phone" required />
+              <input type="email" placeholder="Email" required />
+              <input type="text" placeholder="Address" required />
+            </div>
+            <textarea placeholder="How can we help?" rows="3"></textarea>
+            <button type="button" class="btn btn--primary">Send My Request</button>
+          </form>
+        </div>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .hero-form-section {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    padding: 6rem 0;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(6, 13, 20, 0.96) 0%, rgba(6, 13, 20, 0.8) 50%, rgba(33, 150, 196, 0.2) 100%);
+    z-index: 1;
+  }
+
+  .hero-container {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  /* Variant: Side */
+  .hero-form-section--side .hero-container {
+    grid-template-columns: 1fr 400px;
+  }
+
+  /* Variant: Split */
+  .hero-form-section--split .hero-container {
+    grid-template-columns: 1fr 1fr;
+    text-align: left;
+  }
+
+  /* Variant: Horizontal */
+  .hero-form-section--horizontal {
+    text-align: center;
+    min-height: 70vh;
+  }
+  .hero-form-section--horizontal .hero-container {
+    grid-template-columns: 1fr;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .hero-form-section--horizontal h1 { margin: 0 auto 1.5rem; }
+  .hero-form-section--horizontal .subtitle { margin: 0 auto 2.5rem; }
+
+  /* Variant: Overlap */
+  .hero-form-section--overlap {
+    padding-bottom: 10rem;
+  }
+  .hero-form-section--overlap .hero-container {
+    grid-template-columns: 1.2fr 1fr;
+  }
+  .hero-form-section--overlap .form-container {
+    margin-bottom: -15rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .hero-content h1 {
+    font-size: 4.5rem;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    max-width: 12ch;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 1.25rem;
+    line-height: 1.7;
+    max-width: 50ch;
+    font-weight: 300;
+  }
+
+  .hero-badges {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .badge {
+    background: rgba(91, 196, 232, 0.1);
+    border: 1px solid var(--border);
+    color: var(--accent2);
+    font-size: 0.7rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 99px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* Form Styling - Base */
+  .lead-form {
+    padding: 2.5rem;
+    border-radius: 15px;
+  }
+
+  /* Side Variant: Deep Surface */
+  .hero-form-section--side .lead-form {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+
+  /* Split Variant: Minimalist Border */
+  .hero-form-section--split .lead-form {
+    background: transparent;
+    border: 2px solid var(--border);
+    backdrop-filter: blur(4px);
+  }
+
+  /* Overlap Variant: Premium Gold Accent */
+  .hero-form-section--overlap .lead-form {
+    background: var(--panel);
+    border: 1px solid var(--gold);
+    box-shadow: 0 0 30px rgba(200, 146, 42, 0.1);
+  }
+
+  .form-head { margin-bottom: 1.5rem; }
+  .form-head h3 { font-size: 1.5rem; color: var(--text); margin-bottom: 0.25rem; font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.03em; }
+  .form-head p { font-size: 0.9rem; color: var(--muted); }
+
+  form { display: grid; gap: 1rem; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  
+  input, textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.95rem;
+  }
+
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent2);
+  }
+
+  .lead-form .btn { width: 100%; justify-content: center; padding: 1rem; }
+
+  /* Horizontal Form Specifics */
+  .h-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.2fr auto;
+    gap: 1rem;
+    background: rgba(12, 24, 32, 0.7);
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    backdrop-filter: blur(20px);
+    max-width: 1000px;
+    margin: 0 auto;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+  }
+  .h-form input { 
+    background: rgba(255, 255, 255, 0.05); 
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .h-form .btn {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    box-shadow: 0 0 15px rgba(33, 150, 196, 0.3);
+  }
+
+  @media (max-width: 1080px) {
+    .hero-container { grid-template-columns: 1fr !export default; text-align: center; }
+    .hero-form-section--side .hero-container,
+    .hero-form-section--split .hero-container,
+    .hero-form-section--overlap .hero-container { grid-template-columns: 1fr; }
+    
+    .hero-content h1 { font-size: 3rem; }
+    .subtitle, .hero-badges { margin-left: auto; margin-right: auto; }
+    .form-container { max-width: 500px; margin: 0 auto; }
+    .h-form { grid-template-columns: 1fr 1fr; }
+    .h-form button { grid-column: span 2; }
+    .hero-form-section--overlap .form-container { margin-bottom: 0; }
+  }
+
+  @media (max-width: 600px) {
+    .h-form { grid-template-columns: 1fr; }
+    .h-form button { grid-column: span 1; }
+    .form-grid { grid-template-columns: 1fr; }
+  }
+</style>

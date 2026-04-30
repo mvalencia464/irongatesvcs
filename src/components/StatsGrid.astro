@@ -1,0 +1,67 @@
+---
+interface Stat {
+  value: string;
+  label: string;
+  icon?: string;
+}
+
+interface Props {
+  stats: Stat[];
+}
+
+const { stats } = Astro.props;
+---
+
+<div class="stats-grid">
+  {stats.map(stat => (
+    <div class="stat-card panel-card">
+      {stat.icon && <span class="stat-icon">{stat.icon}</span>}
+      <div class="stat-value">{stat.value}</div>
+      <div class="stat-label">{stat.label}</div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .stat-card {
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 3px solid var(--accent);
+  }
+
+  .stat-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .stat-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(180deg, var(--text) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .stat-label {
+    color: var(--muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+  }
+</style>

@@ -1,0 +1,316 @@
+---
+// src/components/ContactSection.astro
+import { SITE } from '../config/site';
+import { r2img } from '../lib/r2';
+---
+
+<section id="contact" class="section" style="background: var(--deep);">
+  <div class="container contact">
+
+    <div class="contact__info">
+      <span class="section-label">Get In Touch</span>
+      <h2 style="color:var(--text);">{SITE.name}</h2>
+      <p class="contact__sub">
+        Handyman repairs, drone inspections and media, and real estate support for Tampa, Brandon, and Riverview.
+        Call for a free quote or send a message—we will follow up with clear next steps.
+      </p>
+
+      <ul class="contact__details">
+        <li>
+          <a href={`tel:${SITE.phone.replace(/\D/g,'')}`}>{SITE.phone}</a>
+        </li>
+        <li>
+          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        </li>
+        <li>
+          <span>{SITE.address}</span>
+        </li>
+        <li>
+          <span>{SITE.hoursLine}</span>
+        </li>
+      </ul>
+
+      {(SITE.social.facebook || SITE.social.instagram) && (
+        <div class="contact__social">
+          {SITE.social.facebook && (
+            <a href={SITE.social.facebook} target="_blank" rel="noopener" class="social-link">
+              Facebook
+            </a>
+          )}
+          {SITE.social.instagram && (
+            <a href={SITE.social.instagram} target="_blank" rel="noopener" class="social-link">
+              Instagram
+            </a>
+          )}
+        </div>
+      )}
+    </div>
+
+    <div class="contact__form-wrap">
+      <form class="contact-form" name="contact" method="POST" data-netlify="true" action="/thanks">
+        <!-- Works with Netlify Forms, Cloudflare Pages Forms, or Formspree -->
+        <input type="hidden" name="form-name" value="contact" />
+
+        <h3 class="contact-form__title">Send a Message</h3>
+        <p class="contact-form__copy">Describe your project—repairs, drone work, or rental turnover—and we will get back to you promptly.</p>
+
+        <input class="contact-form__field" type="text" id="name" name="name" required placeholder="Full Name" aria-label="Full Name" />
+        <input class="contact-form__field" type="tel" id="phone" name="phone" required placeholder="Phone Number" aria-label="Phone Number" />
+        <input class="contact-form__field" type="email" id="email" name="email" required placeholder="Email Address" aria-label="Email Address" />
+        <input class="contact-form__field" type="text" id="address" name="address" required placeholder="Property Address" aria-label="Property Address" />
+
+        <label class="contact-form__checkbox">
+          <input type="checkbox" name="consent_project_sms" required />
+          <span>
+            I agree to {SITE.name}'s
+            <a href="/terms"> Terms</a> and
+            <a href="/policy"> Privacy Policy</a>, and I consent to project-related texts. Msg &amp; data rates may apply.
+          </span>
+        </label>
+
+        <label class="contact-form__checkbox">
+          <input type="checkbox" name="consent_marketing_sms" required />
+          <span>
+            I consent to recurring marketing texts from {SITE.name}. Consent is not required to purchase. Reply STOP to opt out.
+          </span>
+        </label>
+
+        <button type="submit" class="btn btn--primary contact-form__submit">
+          Send My Request →
+        </button>
+
+        <div class="contact-form__owner">
+          {SITE.owner.headshot ? (
+            <img
+              src={r2img(SITE.owner.headshot)}
+              alt={`${SITE.owner.name}, owner of ${SITE.name}`}
+              loading="lazy"
+              width="34"
+              height="34"
+            />
+          ) : null}
+          <div class="contact-form__owner-copy">
+            <strong>{SITE.owner.name}</strong>
+            <span>will contact you directly</span>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .contact {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  @media (max-width: 800px) {
+    .contact { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+
+  .contact__sub {
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.65;
+    margin-bottom: 2rem;
+  }
+
+  .contact__form-wrap {
+    position: relative;
+    background: linear-gradient(160deg, rgba(30, 41, 59, 0.94), rgba(15, 23, 42, 0.94));
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 22px 44px rgba(6, 12, 24, 0.45);
+    padding: 1rem;
+  }
+
+  .contact__form-wrap::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 3px;
+    border-radius: 14px 14px 0 0;
+    background: linear-gradient(90deg, rgba(245, 158, 11, 0.95), rgba(245, 158, 11, 0.2));
+  }
+
+  .contact__details {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .contact__details li {
+    display: flex;
+    align-items: flex-start;
+    color: var(--text);
+    font-size: 1rem;
+  }
+
+  .contact__details a {
+    color: var(--accent2);
+    font-weight: 600;
+  }
+
+  .contact__social {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .social-link {
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .social-link:hover { color: var(--accent2); }
+
+  /* Form */
+  .contact-form {
+    position: relative;
+    z-index: 1;
+    background: transparent;
+    border: 0;
+    border-radius: 10px;
+    padding: 0.4rem 0.2rem 0.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-form__title {
+    color: var(--text);
+    font-size: 1.45rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .contact-form__copy {
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.55;
+    margin-bottom: 0.45rem;
+  }
+
+  .contact-form input.contact-form__field {
+    width: 100%;
+    padding: 0.78rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.2;
+    color: var(--text);
+    background: rgba(8, 16, 34, 0.72);
+    appearance: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  }
+
+  .contact-form input.contact-form__field::placeholder {
+    color: rgba(242, 247, 255, 0.56);
+  }
+
+  .contact-form input.contact-form__field:focus {
+    outline: none;
+    border-color: var(--accent2);
+    background: rgba(10, 24, 48, 0.9);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+  }
+
+  .contact-form input.contact-form__field:-webkit-autofill,
+  .contact-form input.contact-form__field:-webkit-autofill:hover,
+  .contact-form input.contact-form__field:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--text);
+    -webkit-box-shadow: 0 0 0 1000px rgba(8, 16, 34, 0.9) inset;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  .contact-form__checkbox {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    color: var(--muted);
+    font-size: 0.73rem;
+    line-height: 1.4;
+    margin: 0.1rem 0 0.25rem;
+  }
+
+  .contact-form__checkbox input {
+    margin-top: 0.15rem;
+    accent-color: var(--accent2);
+  }
+
+  .contact-form__checkbox a {
+    color: var(--accent2);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .contact-form__submit {
+    width: 100%;
+    justify-content: center;
+    border-radius: 9px;
+    background: linear-gradient(135deg, var(--accent) 0%, #d97706 100%);
+    box-shadow: 0 12px 24px rgba(245, 158, 11, 0.25);
+  }
+
+  .contact-form__submit:hover {
+    background: linear-gradient(135deg, var(--gold) 0%, #fcd34d 100%);
+    color: var(--deep);
+    box-shadow: 0 14px 28px rgba(251, 191, 36, 0.35);
+  }
+
+  .contact-form__owner {
+    margin-top: 0.35rem;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.65rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: rgba(8, 18, 37, 0.46);
+  }
+
+  .contact-form__owner img {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .contact-form__owner-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.08rem;
+    max-width: none;
+  }
+
+  .contact-form__owner-copy span {
+    color: var(--muted);
+    font-size: 0.73rem;
+    line-height: 1.35;
+    letter-spacing: 0.02em;
+  }
+
+  .contact-form__owner-copy strong {
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.76rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+</style>

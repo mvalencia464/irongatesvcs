@@ -1,0 +1,173 @@
+---
+interface Package {
+  name: string;
+  price: string;
+  description: string;
+  features: string[];
+  isPopular?: boolean;
+}
+
+interface Props {
+  packages: Package[];
+  title?: string;
+}
+
+const { packages, title = "Service Packages" } = Astro.props;
+---
+
+<section class="pricing-section">
+  <div class="section-header">
+    <span class="section-label">Investment</span>
+    <h2>{title}</h2>
+  </div>
+
+  <div class="pricing-grid">
+    {packages.map(pkg => (
+      <div class={`pricing-card panel-card ${pkg.isPopular ? 'pricing-card--popular' : ''}`}>
+        {pkg.isPopular && <div class="popular-badge">Most Popular</div>}
+        <div class="pricing-header">
+          <h3>{pkg.name}</h3>
+          <div class="price">
+            <span class="currency">$</span>
+            <span class="amount">{pkg.price}</span>
+            <span class="period">/visit</span>
+          </div>
+          <p>{pkg.description}</p>
+        </div>
+        <ul class="pricing-features">
+          {pkg.features.map(feature => (
+            <li>
+              <span class="check">✔</span>
+              {feature}
+            </li>
+          ))}
+        </ul>
+        <div class="pricing-footer">
+          <a href="#contact" class={`btn ${pkg.isPopular ? 'btn--primary' : 'btn--outline'}`}>
+            Get Started
+          </a>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .pricing-section {
+    width: 100%;
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    align-items: flex-start;
+  }
+
+  .pricing-card {
+    padding: 3rem 2rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+  }
+
+  .pricing-card--popular {
+    border-color: var(--accent2);
+    transform: scale(1.05);
+    z-index: 2;
+  }
+
+  .popular-badge {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--accent2);
+    color: var(--deep);
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .pricing-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2rem;
+  }
+
+  .pricing-header h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .price {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .currency {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    line-height: 1;
+  }
+
+  .period {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-left: 0.2rem;
+  }
+
+  .pricing-header p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin: 0 auto;
+  }
+
+  .pricing-features {
+    list-style: none;
+    margin-bottom: 2.5rem;
+    flex-grow: 1;
+  }
+
+  .pricing-features li {
+    display: flex;
+    gap: 0.8rem;
+    color: var(--text);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    align-items: center;
+  }
+
+  .check {
+    color: var(--accent2);
+    font-size: 1.1rem;
+  }
+
+  .pricing-footer {
+    text-align: center;
+  }
+
+  .pricing-footer .btn {
+    width: 100%;
+  }
+
+  @media (max-width: 1024px) {
+    .pricing-card--popular {
+      transform: none;
+    }
+  }
+</style>

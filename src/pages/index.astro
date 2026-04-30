@@ -1,0 +1,74 @@
+---
+// src/pages/index.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import ServicesGrid from '../components/ServicesGrid.astro';
+import AboutSection from '../components/AboutSection.astro';
+import ReviewsSection from '../components/ReviewsSection.astro';
+import ContactSection from '../components/ContactSection.astro';
+import MapSection from '../components/MapSection.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import FAQSection from '../components/FAQSection.astro';
+import Footer from '../components/Footer.astro';
+import SplitFeature from '../components/SplitFeature.astro';
+import RecentWork from '../components/RecentWork.astro';
+
+const IG = "https://media.stokeleads.com/irongatesvcs";
+
+const workProcessSteps = [
+  { title: 'Tell Us What You Need', description: 'Call or send a request with your address and photos—we respond with clear next steps.' },
+  { title: 'On-Site Assessment', description: 'We evaluate the work in person and use drone views when they help you see the full picture.' },
+  { title: 'Scope & Schedule', description: 'You get a transparent quote, timeline, and no-pressure plan before we start.' },
+  { title: 'Done Right & Walkthrough', description: 'We complete the work cleanly, then review results together and note any follow-ups.' },
+];
+
+const transformationGalleryProjects = [
+  { title: 'Bathroom lighting detail', category: 'Handyman', image: `${IG}/close_up_of_three_white_bathroom_light_fixtures_above_a_mirror_.avif` },
+  { title: 'Tiled shower upgrade', category: 'Handyman', image: `${IG}/modern_tiled_shower_with_glass_door_and_window_showing_outdoor_greenery_ (1).avif` },
+  { title: 'Vanity & mirror lighting', category: 'Handyman', image: `${IG}/three_white_glass_light_fixtures_mounted_on_a_textured_wall_above_a_mirror_ (1).avif` },
+  { title: 'Bath refresh in progress', category: 'Handyman', image: `${IG}/modern_bathroom_with_glass_shower_and_tools_on_the_sink_ (1).avif` },
+  { title: 'Wall fixture install', category: 'Handyman', image: `${IG}/wall_mounted_light_fixture_with_textured_wall_background_ (1).avif` },
+];
+
+---
+
+<BaseLayout>
+  <Header />
+  <main>
+    <Hero />
+    <ServicesGrid />
+    <section class="section">
+      <div class="container">
+        <SplitFeature
+          eyebrow="Free quote"
+          title="Call for a Free, No-Obligation Quote"
+          description="Whether it is a repair list, aerial documentation, or turnover work on a rental, we respond with honest recommendations and transparent pricing."
+          image={`${IG}/modern_bathroom_with_glass_shower_and_tools_on_the_sink_ (1).avif`}
+          buttonText="Contact IronGate"
+          buttonHref="#contact"
+        />
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <ProcessSteps
+          steps={workProcessSteps}
+          title="How We Work With You"
+          subtitle="A straightforward path from first call to finished work—built for homeowners, landlords, and busy schedules."
+        />
+      </div>
+    </section>
+    <AboutSection />
+    <section class="section">
+      <div class="container">
+        <RecentWork projects={transformationGalleryProjects} />
+      </div>
+    </section>
+    <ReviewsSection />
+    <FAQSection />
+    <ContactSection />
+    <MapSection />
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,291 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CTABanner from '../components/CTABanner.astro';
+import { SITE } from '../config/site';
+
+const claimSteps = [
+  {
+    title: 'Emergency Protection',
+    detail: 'If active leaks are present, we prioritize temporary protection to reduce further interior damage.',
+  },
+  {
+    title: 'Photo Documentation',
+    detail: 'Our team captures clear photos and notes that align with common adjuster review requirements.',
+  },
+  {
+    title: 'Scope and Estimate',
+    detail: 'You get a straightforward repair or replacement scope that can be shared with your carrier.',
+  },
+  {
+    title: 'Coordinate Next Steps',
+    detail: 'After claim direction is clear, we schedule work and keep communication simple from start to finish.',
+  },
+];
+
+const whatsIncluded = [
+  'Storm impact inspection (shingle, flashing, ridge, penetrations)',
+  'Damage photo package with area-by-area notes',
+  'Clear repair vs replacement recommendations',
+  'Insurance-ready project scope summary',
+  'Fast scheduling for approved work',
+];
+
+const faqItems = [
+  {
+    q: 'Can you meet with my insurance adjuster?',
+    a: 'Yes. We can coordinate inspection timing so observations and scope details are clearly documented.',
+  },
+  {
+    q: 'Do I have to wait for claim approval before stopping leaks?',
+    a: 'No. Emergency protection should happen quickly to prevent additional damage. We can secure the roof first.',
+  },
+  {
+    q: 'What if my claim only covers part of the project?',
+    a: 'We explain practical options, including phased scopes and financing paths, so your roof can still be protected.',
+  },
+];
+---
+
+<BaseLayout
+  title={`Roof Insurance Claims Help | ${SITE.name}`}
+  description={`${SITE.name} helps Florida homeowners document storm roof damage and navigate insurance claim roofing work.`}
+>
+  <Header />
+
+  <main>
+    <section class="section claims-hero">
+      <div class="container">
+        <span class="section-label">Storm Recovery</span>
+        <h1>Roof Insurance Claims Support for Florida Homeowners</h1>
+        <p>
+          Storm damage is stressful enough. Our team helps you document roof issues clearly,
+          organize next steps, and move from claim confusion to a protected home quickly.
+        </p>
+        <div class="claims-hero__actions">
+          <a href="/#contact" class="btn btn--primary">Book Storm Inspection</a>
+          <a href={`tel:${SITE.phone.replace(/\D/g, '')}`} class="btn btn--outline">Call {SITE.phone}</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Claim Workflow</span>
+          <h2>What Happens After You Contact Us</h2>
+        </div>
+        <div class="claims-grid">
+          {claimSteps.map((step, idx) => (
+            <article class="panel-card claim-card">
+              <p class="claim-card__num">Step {idx + 1}</p>
+              <h3>{step.title}</h3>
+              <p>{step.detail}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container claims-content">
+        <div class="panel-card included-card">
+          <h2>What Our Claim Support Includes</h2>
+          <ul>
+            {whatsIncluded.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+
+        <aside class="panel-card urgency-card">
+          <h2>Active Leak Right Now?</h2>
+          <p>
+            Immediate leak protection can reduce ceiling, insulation, and drywall damage while
+            your claim details are being reviewed.
+          </p>
+          <a href={`tel:${SITE.phone.replace(/\D/g, '')}`} class="btn btn--primary urgency-card__btn">
+            Call Emergency Team
+          </a>
+          <a href="/#contact" class="urgency-card__alt">Request callback instead</a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">FAQs</span>
+          <h2>Insurance Claim Questions</h2>
+        </div>
+        <div class="faq-list">
+          {faqItems.map((faq) => (
+            <details class="panel-card faq-item">
+              <summary>{faq.q}</summary>
+              <p>{faq.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <CTABanner />
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .claims-hero {
+    padding-top: 8rem;
+  }
+
+  .claims-hero h1 {
+    color: var(--text);
+    margin-bottom: 0.75rem;
+  }
+
+  .claims-hero p {
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    max-width: 70ch;
+  }
+
+  .claims-hero__actions {
+    margin-top: 1.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .claims-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .claim-card {
+    padding: 1rem;
+  }
+
+  .claim-card__num {
+    color: var(--accent2);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .claim-card h3 {
+    color: var(--text);
+    font-size: 1.3rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .claim-card p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  .claims-content {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 1.2rem;
+    align-items: start;
+  }
+
+  .included-card,
+  .urgency-card {
+    padding: 1.1rem;
+  }
+
+  .included-card h2,
+  .urgency-card h2 {
+    color: var(--text);
+    font-size: 1.5rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .included-card ul {
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .included-card li {
+    color: var(--muted);
+    padding-left: 0.9rem;
+    position: relative;
+    font-size: 0.92rem;
+  }
+
+  .included-card li::before {
+    content: "";
+    width: 0.35rem;
+    height: 0.35rem;
+    border-radius: 50%;
+    background: var(--accent2);
+    position: absolute;
+    left: 0;
+    top: 0.52rem;
+  }
+
+  .urgency-card p {
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+
+  .urgency-card__btn {
+    margin-top: 0.9rem;
+    width: 100%;
+  }
+
+  .urgency-card__alt {
+    display: block;
+    text-align: center;
+    margin-top: 0.65rem;
+    color: var(--muted);
+    font-size: 0.84rem;
+  }
+
+  .faq-list {
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .faq-item {
+    padding: 0.9rem 1rem;
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    color: var(--text);
+    font-size: 0.93rem;
+    font-weight: 700;
+  }
+
+  .faq-item p {
+    margin-top: 0.55rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 1020px) {
+    .claims-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .claims-content {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .claims-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config/site';
+---
+
+<BaseLayout title={`Privacy Policy | ${SITE.name}`} description={`Privacy policy for ${SITE.name}.`}>
+  <Header />
+  <main class="section legal-page">
+    <div class="container legal-content panel-card">
+      <span class="section-label">Legal</span>
+      <h1>Privacy Policy</h1>
+      <p>Last updated: April 28, 2026</p>
+
+      <h2>Information We Collect</h2>
+      <p>We collect information you submit through forms, including your name, phone number, email, address, and project details.</p>
+
+      <h2>How We Use Information</h2>
+      <p>We use your information to respond to estimate requests, provide services, send project updates, and, if opted in, send marketing messages.</p>
+
+      <h2>SMS Consent</h2>
+      <p>SMS consent is not shared with third parties for their own marketing. You may opt out at any time by replying STOP.</p>
+
+      <h2>Data Security</h2>
+      <p>We use reasonable administrative and technical safeguards to protect submitted information, but no transmission method is guaranteed 100% secure.</p>
+
+      <h2>Contact</h2>
+      <p>Questions about this policy: <a href={`mailto:${SITE.email}`}>{SITE.email}</a> or <a href={`tel:${SITE.phone.replace(/\D/g, '')}`}>{SITE.phone}</a>.</p>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .legal-page {
+    padding-top: 8rem;
+  }
+
+  .legal-content {
+    padding: 1.6rem;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .legal-content h1 {
+    margin-bottom: 0.6rem;
+    color: var(--text);
+  }
+
+  .legal-content h2 {
+    margin: 1.35rem 0 0.45rem;
+    color: var(--text);
+    font-size: 1.5rem;
+  }
+
+  .legal-content p {
+    color: var(--muted);
+    line-height: 1.7;
+  }
+</style>

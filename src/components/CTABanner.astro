@@ -1,0 +1,51 @@
+---
+// src/components/CTABanner.astro
+import { SITE } from '../config/site';
+---
+
+<section class="cta-banner">
+  <div class="container cta-banner__inner">
+    <div class="cta-banner__text">
+      <h2>Ready to Tackle Your To-Do List?</h2>
+      <p>Call IronGate Services LLC for handyman work, drone documentation, or real estate support in Tampa, Brandon, and Riverview.</p>
+    </div>
+    <a href={`tel:${SITE.phone.replace(/\D/g,'')}`} class="btn btn--primary cta-banner__btn">
+      Call {SITE.phone}
+    </a>
+  </div>
+</section>
+
+<style>
+  .cta-banner {
+    background: linear-gradient(120deg, rgba(15, 23, 42, 0.94), rgba(30, 41, 59, 0.92));
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 0;
+  }
+
+  .cta-banner__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .cta-banner__text h2 {
+    color: var(--text);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+  }
+
+  .cta-banner__text p {
+    color: var(--muted);
+    margin-top: 0.3rem;
+    font-size: 1.05rem;
+  }
+
+  .cta-banner__btn {
+    font-size: 1.15rem;
+    padding: 1rem 2.5rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+</style>

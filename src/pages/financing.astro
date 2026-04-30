@@ -1,0 +1,342 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CTABanner from '../components/CTABanner.astro';
+import { SITE } from '../config/site';
+
+const financingOptions = [
+  {
+    title: 'Deferred Interest Plans',
+    detail: 'Qualified homeowners can complete roof work now and delay larger payments while planning cash flow.',
+  },
+  {
+    title: 'Fixed Monthly Payments',
+    detail: 'Predictable monthly payment options for replacement, restoration, and major roofing upgrades.',
+  },
+  {
+    title: 'Fast Credit Decisions',
+    detail: 'Most financing applications receive a quick review so you can move forward without long delays.',
+  },
+];
+
+const paymentExamples = [
+  { project: 'Leak Repair', investment: '$1,500 - $3,500', payment: '$65 - $150/mo*' },
+  { project: 'Partial Roof Section', investment: '$4,500 - $8,500', payment: '$185 - $350/mo*' },
+  { project: 'Full Roof Replacement', investment: '$11,000 - $24,000+', payment: '$425 - $930/mo*' },
+];
+
+const faqItems = [
+  {
+    q: 'Will checking financing hurt my credit?',
+    a: 'Most lenders start with a soft pull or prequalification step. Final terms may require a hard inquiry after you choose an option.',
+  },
+  {
+    q: 'Can I finance emergency roof work after storm damage?',
+    a: 'Yes. Financing is commonly used for urgent repairs and temporary protection while insurance details are finalized.',
+  },
+  {
+    q: 'Can I still pay off early?',
+    a: 'Most plans allow early payoff. We will walk you through lender terms before any agreement is signed.',
+  },
+];
+---
+
+<BaseLayout
+  title={`Roof Financing Options | ${SITE.name}`}
+  description={`Explore roof financing options with ${SITE.name} to spread project costs into manageable monthly payments.`}
+>
+  <Header />
+
+  <main>
+    <section class="section finance-hero">
+      <div class="container finance-hero__layout">
+        <div>
+          <span class="section-label">Affordable Roofing</span>
+          <h1>Roof Financing That Helps You Start Now</h1>
+          <p>
+            Protect your home without delaying repairs. We help qualified homeowners access
+            flexible financing for emergency leak repairs, storm restoration, and full roof replacement.
+          </p>
+          <div class="finance-hero__actions">
+            <a href="/#contact" class="btn btn--primary">Check Financing Options</a>
+            <a href={`tel:${SITE.phone.replace(/\D/g, '')}`} class="btn btn--outline">Call {SITE.phone}</a>
+          </div>
+          <p class="finance-hero__fineprint">
+            *Monthly payment examples are estimates for planning purposes only and vary by lender, term, and credit profile.
+          </p>
+        </div>
+
+        <aside class="panel-card finance-card">
+          <h2>What You Need to Apply</h2>
+          <ul>
+            <li>Basic homeowner and property details</li>
+            <li>Project scope and estimated investment range</li>
+            <li>Preferred monthly budget target</li>
+            <li>Fast follow-up by our local team</li>
+          </ul>
+          <a href="/#contact" class="btn btn--primary finance-card__btn">Start My Estimate</a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">How It Works</span>
+          <h2>Simple Process, No Pressure</h2>
+        </div>
+        <div class="steps-grid">
+          <article class="panel-card step-item">
+            <p class="step-item__num">01</p>
+            <h3>Request Inspection</h3>
+            <p>We confirm project needs and prepare a clear estimate with material options.</p>
+          </article>
+          <article class="panel-card step-item">
+            <p class="step-item__num">02</p>
+            <h3>Review Payment Paths</h3>
+            <p>We discuss available financing structures that match your monthly comfort zone.</p>
+          </article>
+          <article class="panel-card step-item">
+            <p class="step-item__num">03</p>
+            <h3>Start Roofing Project</h3>
+            <p>Once approved, we schedule your job quickly so your roof is protected right away.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Plan Types</span>
+          <h2>Common Financing Options</h2>
+        </div>
+        <div class="options-grid">
+          {financingOptions.map((item) => (
+            <article class="panel-card option-card">
+              <h3>{item.title}</h3>
+              <p>{item.detail}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Budget Planning</span>
+          <h2>Estimated Monthly Payment Ranges</h2>
+        </div>
+        <div class="panel-card table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Project Type</th>
+                <th>Typical Investment</th>
+                <th>Estimated Payment</th>
+              </tr>
+            </thead>
+            <tbody>
+              {paymentExamples.map((row) => (
+                <tr>
+                  <td>{row.project}</td>
+                  <td>{row.investment}</td>
+                  <td>{row.payment}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">FAQs</span>
+          <h2>Financing Questions Homeowners Ask</h2>
+        </div>
+        <div class="faq-list">
+          {faqItems.map((faq) => (
+            <details class="panel-card faq-item">
+              <summary>{faq.q}</summary>
+              <p>{faq.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <CTABanner />
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .finance-hero {
+    padding-top: 8rem;
+  }
+
+  .finance-hero__layout {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .finance-hero h1 {
+    color: var(--text);
+    margin-bottom: 0.75rem;
+  }
+
+  .finance-hero p {
+    color: var(--muted);
+    font-size: 1.03rem;
+    line-height: 1.7;
+  }
+
+  .finance-hero__actions {
+    margin-top: 1.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .finance-hero__fineprint {
+    margin-top: 0.8rem;
+    font-size: 0.82rem;
+  }
+
+  .finance-card {
+    padding: 1.2rem;
+  }
+
+  .finance-card h2 {
+    color: var(--text);
+    font-size: 1.5rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .finance-card ul {
+    list-style: none;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .finance-card li {
+    color: var(--muted);
+    font-size: 0.92rem;
+    padding-left: 0.85rem;
+    position: relative;
+  }
+
+  .finance-card li::before {
+    content: "";
+    width: 0.35rem;
+    height: 0.35rem;
+    border-radius: 50%;
+    background: var(--accent2);
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+  }
+
+  .finance-card__btn {
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+  .steps-grid,
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .step-item,
+  .option-card {
+    padding: 1rem;
+  }
+
+  .step-item__num {
+    color: var(--accent2);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+
+  .step-item h3,
+  .option-card h3 {
+    color: var(--text);
+    font-size: 1.35rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .step-item p,
+  .option-card p {
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    padding: 0.5rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: 0.8rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  th {
+    color: var(--text);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .faq-list {
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .faq-item {
+    padding: 0.9rem 1rem;
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    color: var(--text);
+    font-weight: 700;
+    font-size: 0.94rem;
+  }
+
+  .faq-item p {
+    margin-top: 0.55rem;
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 980px) {
+    .finance-hero__layout,
+    .steps-grid,
+    .options-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

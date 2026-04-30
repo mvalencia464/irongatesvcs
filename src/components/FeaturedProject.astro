@@ -1,0 +1,332 @@
+---
+import { r2img } from '../lib/r2';
+
+interface Props {
+  title: string;
+  category: string;
+  description: string;
+  featuredImage: string;
+  galleryImages?: string[];
+  videos?: string[];
+  stats?: { label: string; value: string }[];
+}
+
+const { 
+  title, 
+  category, 
+  description, 
+  featuredImage, 
+  galleryImages = [
+    '/IMG_1730.jpg',
+    '/bathroom2.jpeg',
+    '/IMG_1697.jpg',
+    '/bathroom.jpeg'
+  ],
+  videos = [
+    'https://media.stokeleads.com/roofing/pexels-rstephens-33501308.avif',
+    'https://media.stokeleads.com/roofing/pexels-rstephens-33404080.avif',
+    'https://media.stokeleads.com/roofing/pexels-guvo59-31762405.avif',
+    'https://media.stokeleads.com/roofing/pexels-cmoon-12558933.avif'
+  ],
+  stats = [
+    { label: 'Duration', value: '4 Weeks' },
+    { label: 'Type', value: 'Full Renovation' },
+    { label: 'Value', value: 'Premium' }
+  ]
+} = Astro.props;
+---
+
+<article class="featured-project panel-card">
+  <div class="project-header">
+    <div class="project-info">
+      <span class="category-tag">{category}</span>
+      <h2>{title}</h2>
+      <p class="description">{description}</p>
+      
+      <div class="project-stats">
+        {stats.map(stat => (
+          <div class="stat-block">
+            <span class="stat-value">{stat.value}</span>
+            <span class="stat-label">{stat.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+    
+    <div class="featured-media u-hover-lift">
+      <img src={r2img(featuredImage)} alt={title} class="main-image" />
+    </div>
+  </div>
+
+  <div class="project-details">
+    <div class="video-section">
+      <div class="section-meta">
+        <h3>Project Progress</h3>
+        <p>Vertical highlights from the transformation</p>
+      </div>
+      <div class="video-grid">
+        {videos.map((video, i) => (
+          <div class="video-placeholder">
+            <img src={r2img(video)} alt={`Project highlight ${i + 1}`} loading="lazy" />
+            <div class="video-placeholder__overlay">
+              <div class="play-icon">▶</div>
+              <p>Project Highlight {i + 1}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="gallery-section">
+      <div class="section-meta">
+        <h3>Photo Gallery</h3>
+        <p>High-resolution details of the final results</p>
+      </div>
+      <div class="image-grid">
+        {galleryImages.map((img, i) => (
+          <div class="gallery-item u-hover-lift">
+            <img src={r2img(img)} alt={`Gallery image ${i + 1}`} loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</article>
+
+<style>
+  .featured-project {
+    position: relative;
+    padding: 2.5rem;
+    overflow: hidden;
+    background: linear-gradient(160deg, rgba(22, 38, 73, 0.92), rgba(13, 25, 50, 0.92));
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 22px 44px rgba(6, 12, 24, 0.45);
+  }
+
+  .featured-project::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 3px;
+    border-radius: 14px 14px 0 0;
+    background: linear-gradient(90deg, rgba(57, 229, 197, 0.92), rgba(57, 229, 197, 0.22));
+    pointer-events: none;
+  }
+
+  .project-header {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+    align-items: center;
+  }
+
+  .category-tag {
+    display: inline-block;
+    color: var(--gold);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-size: 3.5rem;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+  }
+
+  .description {
+    color: var(--muted);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    max-width: 50ch;
+  }
+
+  .project-stats {
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--border);
+    padding-top: 2rem;
+  }
+
+  .stat-block {
+    position: relative;
+    padding-left: 1rem;
+  }
+
+  .stat-block::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.2rem;
+    bottom: 0.2rem;
+    width: 2px;
+    background: var(--gold);
+    box-shadow: 0 0 10px rgba(200, 146, 42, 0.3);
+  }
+
+  .stat-label {
+    display: block;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .stat-value {
+    display: block;
+    color: var(--text);
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.02em;
+  }
+
+  .featured-media {
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    border: 1px solid var(--border);
+  }
+
+  .main-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .project-details {
+    display: grid;
+    gap: 4rem;
+  }
+
+  .section-meta {
+    margin-bottom: 2rem;
+  }
+
+  .section-meta h3 {
+    font-size: 1.5rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-meta p {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .video-placeholder {
+    aspect-ratio: 9/16;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .video-placeholder:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .video-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .video-placeholder__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: linear-gradient(180deg, rgba(8, 16, 34, 0.28), rgba(8, 16, 34, 0.68));
+    color: var(--text);
+    font-size: 0.8rem;
+    text-align: center;
+  }
+
+  .play-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    padding-left: 4px;
+    box-shadow: 0 0 20px rgba(33, 150, 196, 0.4);
+  }
+
+  .image-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .gallery-item {
+    border-radius: 15px;
+    overflow: hidden;
+    height: 350px;
+    border: 1px solid var(--border);
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 1080px) {
+    .project-header {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .featured-media {
+      aspect-ratio: 16/9;
+      order: -1;
+    }
+
+    .video-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 680px) {
+    .featured-project {
+      padding: 1.5rem;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+    }
+
+    .image-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

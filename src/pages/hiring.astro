@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config/site';
+---
+
+<BaseLayout title={`Hiring | ${SITE.name}`} description={`Join the team at ${SITE.name}.`}>
+  <Header />
+  <main class="section hiring-page">
+    <div class="container hiring-content panel-card">
+      <span class="section-label">Careers</span>
+      <h1>We Are Hiring</h1>
+      <p class="hiring-intro">
+        {SITE.name} is growing across Florida. We are looking for dependable people who care about craftsmanship,
+        customer communication, and doing the job right the first time.
+      </p>
+
+      <h2>Open Roles</h2>
+      <ul class="hiring-list">
+        <li>Roofing Crew Lead</li>
+        <li>Roof Repair Technician</li>
+        <li>Estimator / Field Inspector</li>
+        <li>Project Coordinator</li>
+      </ul>
+
+      <h2>What We Offer</h2>
+      <ul class="hiring-list">
+        <li>Year-round project flow</li>
+        <li>Performance-based growth opportunities</li>
+        <li>Supportive, owner-led team culture</li>
+        <li>Reliable scheduling and clear communication</li>
+      </ul>
+
+      <h2>How to Apply</h2>
+      <p>
+        Send your resume or work history to
+        <a href={`mailto:${SITE.email}`}> {SITE.email}</a>
+        or call
+        <a href={`tel:${SITE.phone.replace(/\D/g, '')}`}> {SITE.phone}</a>.
+      </p>
+      <p>
+        Include your city, years of experience, and the role you are interested in.
+      </p>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .hiring-page {
+    padding-top: 8rem;
+  }
+
+  .hiring-content {
+    padding: 1.6rem;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .hiring-content h1 {
+    margin-bottom: 0.6rem;
+    color: var(--text);
+  }
+
+  .hiring-intro {
+    margin-bottom: 1rem;
+  }
+
+  .hiring-content h2 {
+    margin: 1.35rem 0 0.45rem;
+    color: var(--text);
+    font-size: 1.5rem;
+  }
+
+  .hiring-content p,
+  .hiring-list li {
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .hiring-list {
+    margin: 0;
+    padding-left: 1.15rem;
+    display: grid;
+    gap: 0.2rem;
+  }
+</style>

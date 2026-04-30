@@ -1,0 +1,1084 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config/site';
+import { r2img } from '../lib/r2';
+
+// New Components
+import BeforeAfterSlider from '../components/BeforeAfterSlider.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import StatsGrid from '../components/StatsGrid.astro';
+import TestimonialGrid from '../components/TestimonialGrid.astro';
+import FeatureList from '../components/FeatureList.astro';
+import ComparisonTable from '../components/ComparisonTable.astro';
+import TeamGrid from '../components/TeamGrid.astro';
+import RecentWork from '../components/RecentWork.astro';
+import FeaturedProject from '../components/FeaturedProject.astro';
+import SplitFeature from '../components/SplitFeature.astro';
+import PricingPackages from '../components/PricingPackages.astro';
+import HeroEstimateForm from '../components/HeroEstimateForm.astro';
+
+const priorityComponents = [
+  {
+    tier: 'Tier 1',
+    title: 'Hero + Primary CTA',
+    why: 'Most important conversion zone. Needs immediate clarity, value proposition, and strong call action.',
+  },
+  {
+    tier: 'Tier 1',
+    title: 'Service Card Grid',
+    why: 'Core navigation for homeowner intent. Users should quickly identify the right service path.',
+  },
+  {
+    tier: 'Tier 1',
+    title: 'Lead Form + Click-to-Call',
+    why: 'Must convert both urgent and non-urgent visitors with minimal friction and clear trust cues.',
+  },
+  {
+    tier: 'Tier 2',
+    title: 'Trust Strip (Badges/Stats)',
+    why: 'Builds instant confidence through social proof, years in business, and response-time signals.',
+  },
+  {
+    tier: 'Tier 2',
+    title: 'Before/After Proof Block',
+    why: 'Visual proof of craftsmanship dramatically increases perceived quality and credibility.',
+  },
+  {
+    tier: 'Tier 2',
+    title: 'Review/Testimonial Cards',
+    why: 'Reinforces reliability and reduces buyer hesitation before the contact action.',
+  },
+  {
+    tier: 'Tier 3',
+    title: 'FAQ Accordion',
+    why: 'Pre-answers objections, supports SEO, and prevents drop-off from common uncertainty.',
+  },
+  {
+    tier: 'Tier 3',
+    title: 'Campaign CTA Banners',
+    why: 'Useful for seasonal promos, financing offers, and emergency service positioning.',
+  },
+];
+
+const faqItems = [
+  {
+    question: 'Do you offer financing for roof replacement?',
+    answer: 'Yes. We provide financing options for qualified homeowners so larger projects can be completed without delay.',
+  },
+  {
+    question: 'Can I get pricing before booking?',
+    answer: 'Absolutely. We provide transparent roof estimates with clear scope, material recommendations, and next steps.',
+  },
+  {
+    question: 'What areas do you service?',
+    answer: `We serve ${SITE.serviceAreas.slice(0, 5).join(', ')} and nearby communities.`,
+  },
+];
+
+// Mock data for new components
+const stepsData = [
+  { title: 'Schedule Visit', description: 'Book a time that works for you online or via phone.' },
+  { title: 'Expert Assessment', description: 'Our tech arrives to diagnose the issue and provide options.' },
+  { title: 'Quality Repair', description: 'We perform the work using premium materials and tools.' },
+  { title: 'Final Review', description: 'We walk you through the work and ensure 100% satisfaction.' },
+];
+
+const statsData = [
+  { value: '15k+', label: 'Happy Homes', icon: '🏠' },
+  { value: '25+', label: 'Years Active', icon: '📅' },
+  { value: '100%', label: 'Guaranteed', icon: '✅' },
+  { value: '24/7', label: 'Availability', icon: '⏰' },
+];
+
+const featureData = [
+  { title: 'Certified Experts', description: 'Our team undergoes rigorous training and background checks.', icon: '🛡️' },
+  { title: 'Fair Pricing', description: 'No hidden fees or surprise surcharges, ever.', icon: '💰' },
+  { title: 'Rapid Response', description: 'We arrive on time, every time. Guaranteed.', icon: '⚡' },
+];
+
+const comparisonData = [
+  { feature: 'Licensed & Insured', us: true, them: 'Usually' },
+  { feature: 'Background Checks', us: true, them: false },
+  { feature: 'Emergency Service', us: true, them: true },
+  { feature: 'Parts Warranty', us: 'Lifetime', them: '30 Days' },
+];
+
+const teamData = [
+  { name: 'Miguel Alvarez', role: 'Owner / Licensed Contractor', image: 'https://media.stokeleads.com/roofing/miguel.avif' },
+  { name: 'Khilo Ramirez', role: 'Customer Care Lead', image: 'https://media.stokeleads.com/roofing/khilo.avif' },
+  { name: 'Joel Jacobsen', role: 'Project Manager', image: 'https://media.stokeleads.com/roofing/SCR-20260428-mkqy.avif' },
+  { name: 'Daniel Ortega', role: 'Lead Installer', image: 'https://media.stokeleads.com/roofing/SCR-20260428-mksa.avif' },
+  { name: 'Mariana Soto', role: 'Site Supervisor', image: 'https://media.stokeleads.com/roofing/SCR-20260428-mksx.avif' },
+  { name: 'Hank Richardson', role: 'Production Coordinator', image: 'https://media.stokeleads.com/roofing/SCR-20260428-mkun.avif' },
+];
+
+const workData = [
+  { title: 'Storm-Damage Rebuild', category: 'Roof Restoration', image: 'https://media.stokeleads.com/roofing/pexels-guvo59-31762405.avif' },
+  { title: 'Full Roof Replacement', category: 'Replacement', image: 'https://media.stokeleads.com/roofing/pexels-rstephens-33404248.avif' },
+  { title: 'Leak Repair Project', category: 'Emergency Repair', image: 'https://media.stokeleads.com/roofing/pexels-cmoon-12558933.avif' },
+];
+
+const pricingData = [
+  { 
+    name: 'Basic', 
+    price: '99', 
+    description: 'Essential maintenance for your home systems.',
+    features: ['Annual Inspection', 'Filter Changes', 'Priority Support'] 
+  },
+  { 
+    name: 'Premium', 
+    price: '199', 
+    description: 'Total peace of mind with full coverage.',
+    isPopular: true,
+    features: ['Bi-Annual Inspection', '24/7 Priority Support', '10% Off Repairs', 'No Service Fees'] 
+  },
+  { 
+    name: 'Elite', 
+    price: '299', 
+    description: 'The ultimate protection for high-end properties.',
+    features: ['Quarterly Inspection', 'Concierge Support', '20% Off Repairs', 'Free Diagnostic Visits'] 
+  },
+];
+---
+
+<BaseLayout
+  title={`Component Library | ${SITE.name}`}
+  description="A component library and layout reference for modern home service websites."
+>
+  <Header />
+
+  <main class="library-page">
+    <section class="library-hero section" style={`background-image: url('${r2img('https://media.stokeleads.com/roofing/pexels-chris-the-island-3570397-32270941.avif')}')`}>
+      <div class="hero-overlay"></div>
+      <div class="container hero-layout">
+        <div class="hero-copy">
+          <span class="section-label">Design System Lab</span>
+          <h1>Home Service Component Library</h1>
+          <p>
+            This page prioritizes high-impact conversion components and demonstrates reusable layouts
+            built for home service brands.
+          </p>
+        </div>
+        
+        <div class="hero-form">
+          <div class="hero__form-wrap">
+            <HeroEstimateForm />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Original Sections ... -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Priority First</span>
+          <h2>Highest-Value Components</h2>
+          <p>Start here when building service pages, ads landers, and local home service websites.</p>
+        </div>
+        <div class="priority-grid">
+          {priorityComponents.map((item) => (
+            <article class="panel-card priority-card">
+              <p class="priority-tier">{item.tier}</p>
+              <h3>{item.title}</h3>
+              <p>{item.why}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Advanced Aesthetics</span>
+          <h2>High-Craft Sections</h2>
+          <p>Dynamic, interactive, and visually rich components to elevate the brand experience.</p>
+        </div>
+
+        <div class="library-spacer">
+          <span class="component-label">01. Interactive Before/After</span>
+          <BeforeAfterSlider 
+            beforeImage="https://media.stokeleads.com/roofing/pexels-cmoon-12558933.avif" 
+            afterImage="https://media.stokeleads.com/roofing/SCR-20260428-gplb-3.avif"
+          />
+        </div>
+
+        <div class="library-spacer">
+          <span class="component-label">02. Split Feature Row</span>
+          <SplitFeature 
+            title="Professional Craftsmanship You Can See"
+            description="We don't just fix things; we restore your home's integrity. Our experts use precision tools and years of experience to deliver results that last a lifetime."
+            image="https://media.stokeleads.com/roofing/pexels-rstephens-33501308.avif"
+            eyebrow="The Quality Edge"
+            buttonText="Our Standards"
+          />
+        </div>
+
+        <div class="library-spacer">
+          <span class="component-label">03. Process Timeline</span>
+          <ProcessSteps steps={stepsData} />
+        </div>
+
+        <div class="library-spacer">
+          <span class="component-label">04. Statistics Grid</span>
+          <StatsGrid stats={statsData} />
+        </div>
+
+        <div class="library-spacer">
+          <span class="component-label">05. Testimonial Masonry</span>
+          <TestimonialGrid testimonials={[...SITE.reviews, ...SITE.reviews]} />
+        </div>
+
+        <div class="library-spacer">
+          <span class="component-label">06. Feature Advantage List</span>
+          <FeatureList features={featureData} />
+        </div>
+
+        <div class="library-spacer">
+          <span class="component-label">07. Transparency Table</span>
+          <ComparisonTable rows={comparisonData} />
+        </div>
+
+        <div class="library-spacer">
+          <span class="component-label">08. Team Spotlight</span>
+          <TeamGrid members={teamData} />
+        </div>
+
+        <div class="library-spacer">
+          <span class="component-label">09. Transformation Gallery</span>
+          <RecentWork projects={workData} />
+        </div>
+
+        <div class="library-spacer">
+          <span class="component-label">10. Investment Packages</span>
+          <PricingPackages packages={pricingData} />
+        </div>
+
+        <div class="library-spacer">
+          <span class="component-label">11. Deep-Dive Case Study (Featured Project)</span>
+          <FeaturedProject 
+            title="The Mid-Century Modern Revival"
+            category="Full Home Renovation"
+            description="A comprehensive top-to-bottom transformation of a 1960s ranch. We updated the entire electrical system, opened up the kitchen layout, and restored the original hardwood floors while adding premium modern finishes."
+            featuredImage="https://media.stokeleads.com/roofing/pexels-quang-nguyen-vinh-222549-14776839.avif"
+            videos={[
+              'https://media.stokeleads.com/roofing/pexels-rstephens-33404080.avif',
+              'https://media.stokeleads.com/roofing/pexels-rstephens-33501308.avif',
+              'https://media.stokeleads.com/roofing/pexels-guvo59-31762405.avif',
+              'https://media.stokeleads.com/roofing/pexels-cmoon-12558933.avif'
+            ]}
+            galleryImages={[
+              'https://media.stokeleads.com/roofing/SCR-20260428-gplb-3.avif',
+              'https://media.stokeleads.com/roofing/pexels-rstephens-33404248.avif',
+              'https://media.stokeleads.com/roofing/pexels-rstephens-33501308.avif',
+              'https://media.stokeleads.com/roofing/pexels-ennis-zhu-511510942-16209099.avif'
+            ]}
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Rest of existing components... -->
+    <section class="section section--alt">
+      <div class="container component-block">
+        <div class="component-head">
+          <span class="section-label">Hero Variants</span>
+          <h2>Layout Direction A/B</h2>
+        </div>
+        <div class="hero-variants">
+          <article class="variant variant--image" style={`background-image: url('${r2img('https://media.stokeleads.com/roofing/pexels-rstephens-33404080.avif')}')`}>
+            <div class="variant__overlay"></div>
+            <div class="variant__content">
+              <p class="variant__eyebrow">Emergency Ready</p>
+              <h3>Fast Response Home Repairs</h3>
+              <a class="btn btn--primary" href={`tel:${SITE.phone.replace(/\D/g, '')}`}>Call Now</a>
+            </div>
+          </article>
+          <article class="variant panel-card">
+            <p class="variant__eyebrow">Planned Upgrades</p>
+            <h3>Modern Residential Service Layout</h3>
+            <p>
+              Ideal for SEO service pages with balanced copy, trust stats, and dual CTA actions.
+            </p>
+            <div class="variant__actions">
+              <a class="btn btn--primary" href="/#contact">Book Estimate</a>
+              <a class="btn btn--outline" href="/#services">Explore Services</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt">
+      <div class="container component-block">
+        <div class="component-head">
+          <span class="section-label">Alternative Patterns</span>
+          <h2>Hero + Form and More Variations</h2>
+        </div>
+
+        <article class="panel-card alt-hero-form">
+          <div class="alt-hero-form__media" style={`background-image: url('${r2img('https://media.stokeleads.com/roofing/pexels-ennis-zhu-511510942-16209099.avif')}')`}>
+            <div class="alt-hero-form__overlay"></div>
+            <div class="alt-hero-form__copy">
+              <p class="variant__eyebrow">Lead-Gen Hero</p>
+              <h3>Book Service in 60 Seconds</h3>
+              <p>Best for paid traffic where users need a fast quote form above the fold.</p>
+            </div>
+          </div>
+          <div class="alt-hero-form__form">
+            <h3>Request Fast Estimate</h3>
+            <form>
+              <input type="text" placeholder="Full Name" aria-label="Full Name" />
+              <input type="tel" placeholder="Phone Number" aria-label="Phone Number" />
+              <select aria-label="Preferred Service">
+                <option>Preferred Service</option>
+                {SITE.services.slice(0, 5).map((s) => <option>{s.title}</option>)}
+              </select>
+              <button type="button" class="btn btn--primary">Get My Estimate</button>
+            </form>
+          </div>
+        </article>
+
+        <div class="alt-grid">
+          <article class="panel-card alt-card">
+            <p class="variant__eyebrow">Services Variation</p>
+            <h3>Icon + Bullet Service List</h3>
+            <ul>
+              {SITE.services.slice(0, 4).map((service) => (
+                <li>
+                  <span class="service-mark">{service.icon}</span>
+                  <div>
+                    <strong>{service.title}</strong>
+                    <p>{service.shortDesc}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </article>
+
+          <article class="panel-card alt-card">
+            <p class="variant__eyebrow">Testimonials Variation</p>
+            <h3>Featured Review Spotlight</h3>
+            <blockquote class="spotlight-quote">
+              <p>{SITE.reviews[0].text}</p>
+              <footer>{SITE.reviews[0].name} · {SITE.reviews[0].city}</footer>
+            </blockquote>
+            <div class="spotlight-actions">
+              <a href="/#reviews" class="btn btn--outline">View All Reviews</a>
+              <a href="/#contact" class="btn btn--primary">Book Service</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt">
+      <div class="container component-block">
+        <div class="component-head">
+          <span class="section-label">Trust Strip</span>
+          <h2>Proof and Credibility Band</h2>
+        </div>
+        <div class="trust-strip panel-card">
+          <div class="trust-item">
+            <p class="trust-value">20+</p>
+            <p class="trust-label">Years Experience</p>
+          </div>
+          <div class="trust-item">
+            <p class="trust-value">4.9/5</p>
+            <p class="trust-label">Average Rating</p>
+          </div>
+          <div class="trust-item">
+            <p class="trust-value">&lt; 1 hr</p>
+            <p class="trust-label">Response Goal</p>
+          </div>
+          <div class="trust-item">
+            <p class="trust-value">Licensed</p>
+            <p class="trust-label">Insured Team</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container component-block">
+        <div class="component-head">
+          <span class="section-label">Service Cards</span>
+          <h2>Reusable Service Grid</h2>
+        </div>
+        <div class="library-services">
+          {SITE.services.slice(0, 4).map((service) => (
+            <article class="panel-card library-service-card u-hover-lift">
+              <img src={r2img(service.image)} alt={service.title} loading="lazy" width="400" height="240" />
+              <div class="library-service-card__body">
+                <span class="service-mark">{service.icon}</span>
+                <h3>{service.title}</h3>
+                <p>{service.shortDesc}</p>
+                <a href={`/services/${service.slug}`}>View Pattern</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt">
+      <div class="container component-block">
+        <div class="component-head">
+          <span class="section-label">Visual Proof</span>
+          <h2>Before / After Showcase</h2>
+        </div>
+        <div class="before-after panel-card">
+          <div class="before-after__pane">
+            <p class="pane-label">Before</p>
+            <img src={r2img('https://media.stokeleads.com/roofing/pexels-cmoon-12558933.avif')} alt="Before project image" loading="lazy" />
+          </div>
+          <div class="before-after__pane">
+            <p class="pane-label">After</p>
+            <img src={r2img('https://media.stokeleads.com/roofing/SCR-20260428-gplb-3.avif')} alt="After project image" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container component-block">
+        <div class="component-head">
+          <span class="section-label">Conversion Components</span>
+          <h2>CTA + Form + Reviews</h2>
+        </div>
+
+        <div class="cta-pattern panel-card">
+          <div>
+            <p class="cta-pattern__eyebrow">Campaign Banner Pattern</p>
+            <h3>Book a Home Service Visit This Week</h3>
+          </div>
+          <a class="btn btn--primary" href={`tel:${SITE.phone.replace(/\D/g, '')}`}>Call {SITE.phone}</a>
+        </div>
+
+        <div class="conversion-grid">
+          <article class="panel-card mini-form">
+            <h3>Quick Lead Form Pattern</h3>
+            <p>Use for service pages and local ads landing pages.</p>
+            <form>
+              <input type="text" placeholder="Name" aria-label="Name" />
+              <input type="tel" placeholder="Phone" aria-label="Phone" />
+              <select aria-label="Service">
+                <option>Service Needed</option>
+                {SITE.services.slice(0, 4).map((s) => <option>{s.title}</option>)}
+              </select>
+              <button type="button" class="btn btn--primary">Request Callback</button>
+            </form>
+          </article>
+
+          <article class="panel-card review-stack">
+            <h3>Testimonial Stack Pattern</h3>
+            {SITE.reviews.slice(0, 2).map((review) => (
+              <blockquote>
+                <p>{review.text}</p>
+                <footer>{review.name} · {review.city}</footer>
+              </blockquote>
+            ))}
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt">
+      <div class="container component-block">
+        <div class="component-head">
+          <span class="section-label">FAQ Pattern</span>
+          <h2>Objection-Handling Accordion</h2>
+        </div>
+        <div class="faq-list">
+          {faqItems.map((faq) => (
+            <details class="panel-card faq-item">
+              <summary>{faq.question}</summary>
+              <p>{faq.answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .library-page {
+    background: linear-gradient(180deg, var(--deep) 0%, var(--surface) 48%, var(--deep) 100%);
+  }
+
+  .library-hero {
+    position: relative;
+    padding-top: 10rem;
+    padding-bottom: 6rem;
+    background-size: cover;
+    background-position: center 30%;
+    overflow: hidden;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg, 
+      var(--deep) 0%, 
+      var(--deep) 30%, 
+      rgba(6, 13, 20, 0.85) 60%, 
+      rgba(6, 13, 20, 0.6) 100%
+    );
+    z-index: 1;
+  }
+
+  .hero-layout {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .library-hero h1 {
+    max-width: 12ch;
+    margin-bottom: 1rem;
+  }
+
+  .library-hero p {
+    color: var(--muted);
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .hero__form-wrap {
+    position: relative;
+    z-index: 1;
+    isolation: isolate;
+    background-color: rgba(13, 25, 50, 0.92);
+    background: linear-gradient(160deg, rgba(22, 38, 73, 0.92), rgba(13, 25, 50, 0.92));
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 22px 44px rgba(6, 12, 24, 0.45);
+  }
+
+  .hero__form-wrap::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 3px;
+    border-radius: 14px 14px 0 0;
+    background: linear-gradient(90deg, rgba(57, 229, 197, 0.92), rgba(57, 229, 197, 0.22));
+  }
+
+  .library-spacer {
+    margin-bottom: 6rem;
+    padding-top: 2rem;
+    border-top: 1px dashed var(--border);
+  }
+
+  .library-spacer:first-of-type {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .component-label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 2rem;
+    opacity: 0.6;
+  }
+
+  .component-head {
+    margin-bottom: 1.5rem;
+  }
+
+  .priority-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .priority-card {
+    padding: 1.15rem;
+  }
+
+  .priority-tier {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent2);
+    margin-bottom: 0.6rem;
+  }
+
+  .priority-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.4rem;
+    color: var(--text);
+  }
+
+  .priority-card p {
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .hero-variants {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 1rem;
+  }
+
+  .variant {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    min-height: 320px;
+    padding: 1.4rem;
+  }
+
+  .variant--image {
+    background-size: cover;
+    background-position: center;
+    border: 1px solid var(--border);
+  }
+
+  .variant__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(6, 13, 20, 0.88), rgba(6, 13, 20, 0.35));
+  }
+
+  .variant__content {
+    position: relative;
+    z-index: 1;
+    max-width: 24rem;
+  }
+
+  .variant__eyebrow,
+  .cta-pattern__eyebrow {
+    color: var(--accent2);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.45rem;
+  }
+
+  .variant h3 {
+    color: var(--text);
+    margin-bottom: 0.8rem;
+  }
+
+  .variant p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  .variant__actions {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  .alt-hero-form {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .alt-hero-form__media {
+    position: relative;
+    min-height: 360px;
+    border-radius: 10px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    border: 1px solid var(--border);
+  }
+
+  .alt-hero-form__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(6, 13, 20, 0.9), rgba(6, 13, 20, 0.44));
+  }
+
+  .alt-hero-form__copy {
+    position: absolute;
+    z-index: 1;
+    left: 1.15rem;
+    right: 1.15rem;
+    bottom: 1.15rem;
+  }
+
+  .alt-hero-form__copy h3 {
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+
+  .alt-hero-form__copy p {
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .alt-hero-form__form {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.01);
+  }
+
+  .alt-hero-form__form h3 {
+    color: var(--text);
+    margin-bottom: 0.8rem;
+  }
+
+  .alt-hero-form__form form {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .alt-hero-form__form input,
+  .alt-hero-form__form select {
+    width: 100%;
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.65rem 0.8rem;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .alt-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .alt-card {
+    padding: 1rem;
+  }
+
+  .alt-card h3 {
+    color: var(--text);
+    margin-bottom: 0.8rem;
+  }
+
+  .alt-card ul {
+    list-style: none;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .alt-card li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.65rem;
+    align-items: start;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.65rem;
+  }
+
+  .alt-card li strong {
+    color: var(--text);
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  .alt-card li p {
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .spotlight-quote {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.9rem;
+    background: rgba(255, 255, 255, 0.01);
+    margin-bottom: 0.8rem;
+  }
+
+  .spotlight-quote p {
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 0.55rem;
+  }
+
+  .spotlight-quote footer {
+    color: var(--text);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .spotlight-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .trust-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  .trust-item {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.9rem;
+    background: rgba(255, 255, 255, 0.01);
+  }
+
+  .trust-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .trust-label {
+    color: var(--muted);
+    font-size: 0.74rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .library-services {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .library-service-card img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .library-service-card__body {
+    padding: 1rem;
+  }
+
+  .service-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.1rem;
+    height: 1.35rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(91, 196, 232, 0.08);
+    color: var(--accent2);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.65rem;
+  }
+
+  .library-service-card h3 {
+    font-size: 1.2rem;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+
+  .library-service-card p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 0.8rem;
+  }
+
+  .library-service-card a {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .before-after {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .before-after__pane {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .pane-label {
+    padding: 0.65rem 0.85rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.11em;
+    color: var(--accent2);
+  }
+
+  .before-after__pane img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+  }
+
+  .cta-pattern {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .cta-pattern h3 {
+    color: var(--text);
+    font-size: 1.45rem;
+  }
+
+  .conversion-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .mini-form,
+  .review-stack {
+    padding: 1rem;
+  }
+
+  .mini-form h3,
+  .review-stack h3 {
+    color: var(--text);
+    margin-bottom: 0.45rem;
+  }
+
+  .mini-form p {
+    color: var(--muted);
+    margin-bottom: 0.8rem;
+    font-size: 0.92rem;
+  }
+
+  .mini-form form {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .mini-form input,
+  .mini-form select {
+    width: 100%;
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.65rem 0.8rem;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .review-stack blockquote {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.8rem;
+    margin-bottom: 0.7rem;
+    background: rgba(255, 255, 255, 0.01);
+  }
+
+  .review-stack blockquote p {
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-bottom: 0.45rem;
+  }
+
+  .review-stack blockquote footer {
+    color: var(--text);
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .faq-list {
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .faq-item {
+    padding: 0.9rem 1rem;
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    color: var(--text);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .faq-item p {
+    margin-top: 0.65rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  @media (max-width: 1080px) {
+    .hero-layout {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .hero-overlay {
+      background: linear-gradient(
+        180deg, 
+        var(--deep) 0%, 
+        rgba(6, 13, 20, 0.9) 50%, 
+        rgba(6, 13, 20, 0.7) 100%
+      );
+    }
+
+    .hero-form {
+      max-width: 450px;
+    }
+
+    .priority-grid,
+    .library-services {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .hero-variants,
+    .alt-hero-form,
+    .alt-grid,
+    .conversion-grid,
+    .before-after,
+    .trust-strip {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .priority-grid,
+    .library-services {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,241 @@
+---
+import { SITE } from '../config/site';
+import { r2img } from '../lib/r2';
+
+const mapQuery = encodeURIComponent(`${SITE.address}, ${SITE.city}, ${SITE.state}`);
+const mapsKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY as string | undefined;
+const mapId = import.meta.env.PUBLIC_GOOGLE_MAP_ID as string | undefined;
+
+const staticMapStyles = [
+  'feature:all|element:labels.text.fill|color:0xf2f7ff',
+  'feature:all|element:labels.text.stroke|color:0x0a1428',
+  'feature:road|element:geometry|color:0x1e335d',
+  'feature:water|element:geometry|color:0x122447',
+  'feature:landscape|element:geometry|color:0x0b1833',
+  'feature:poi|element:all|visibility:off',
+  'feature:transit|element:all|visibility:off',
+  'feature:administrative|element:geometry.stroke|color:0x274779',
+];
+
+const staticStyleQuery = staticMapStyles
+  .map((style) => `style=${encodeURIComponent(style)}`)
+  .join('&');
+
+const staticMapSrc = mapsKey
+  ? `https://maps.googleapis.com/maps/api/staticmap?center=${mapQuery}&zoom=9&size=1280x640&scale=2&maptype=roadmap&markers=color:0xf59e0b%7C${mapQuery}${mapId ? `&map_id=${mapId}` : `&${staticStyleQuery}`}&key=${mapsKey}`
+  : r2img(SITE.map.image);
+
+const embedMapSrc = mapsKey
+  ? `https://www.google.com/maps/embed/v1/place?key=${mapsKey}&q=${mapQuery}&zoom=9${mapId ? `&map_id=${mapId}` : ''}`
+  : `https://www.google.com/maps?q=${mapQuery}&output=embed`;
+---
+
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Service Map</span>
+      <h2>{SITE.map.title}</h2>
+      <p>{SITE.map.subtitle}</p>
+    </div>
+
+    <div class="map-layout">
+      <aside class="areas-panel">
+        <h3>Areas Served</h3>
+        <p>Locally focused on Tampa, Brandon, Riverview, and nearby communities—handyman, drone, and real estate support.</p>
+        <ul class="areas-list">
+          {SITE.serviceAreas.map((area) => (
+            <li>{area}</li>
+          ))}
+        </ul>
+      </aside>
+
+      <div class="map-panel">
+        <div class="map-card" data-map-card data-embed-src={embedMapSrc}>
+          <button type="button" class="map-card__trigger" data-map-trigger aria-label="Load interactive Google Map">
+            <img
+              src={staticMapSrc}
+              data-fallback-src={r2img(SITE.map.image)}
+              alt={`Static map preview of ${SITE.name} service area`}
+              loading="lazy"
+              width="1280"
+              height="640"
+            />
+            <div class="map-card__overlay">
+              <span>Click to Load Interactive Map</span>
+            </div>
+          </button>
+
+          <iframe
+            class="map-card__frame"
+            title={`Google Map showing ${SITE.name} in ${SITE.city}, ${SITE.state}`}
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+
+        <p class="map-card__hint">
+          Map is loaded on demand for faster page performance.
+          <a href={SITE.map.link} target="_blank" rel="noopener noreferrer">Open Google Maps in a new tab →</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const mapCard = document.querySelector('[data-map-card]');
+
+  if (mapCard instanceof HTMLElement) {
+    const trigger = mapCard.querySelector('[data-map-trigger]');
+    const frame = mapCard.querySelector('.map-card__frame');
+    const mapPreview = mapCard.querySelector('img');
+    const embedSrc = mapCard.dataset.embedSrc;
+
+    if (mapPreview instanceof HTMLImageElement) {
+      mapPreview.addEventListener('error', () => {
+        const fallbackSrc = mapPreview.dataset.fallbackSrc;
+        if (!fallbackSrc || mapPreview.src === fallbackSrc) return;
+        mapPreview.src = fallbackSrc;
+      });
+    }
+
+    if (trigger instanceof HTMLButtonElement && frame instanceof HTMLIFrameElement && embedSrc) {
+      trigger.addEventListener('click', () => {
+        if (mapCard.classList.contains('map-card--loaded')) return;
+        frame.src = embedSrc;
+        mapCard.classList.add('map-card--loaded');
+      });
+    }
+  }
+</script>
+
+<style>
+  .map-layout {
+    display: grid;
+    gap: 1.25rem;
+    align-items: stretch;
+    grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+  }
+
+  .map-panel {
+    min-width: 0;
+  }
+
+  .areas-panel {
+    padding: 0.2rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .areas-panel h3 {
+    color: var(--text);
+    font-size: 1.35rem;
+    margin: 0;
+  }
+
+  .areas-panel p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 36ch;
+  }
+
+  .areas-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.55rem 0.7rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .areas-list li {
+    color: var(--text);
+    font-size: 0.85rem;
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    border-radius: 999px;
+    padding: 0.35rem 0.6rem;
+    background: rgba(255, 255, 255, 0.01);
+    text-align: center;
+  }
+
+  .map-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
+  }
+
+  .map-card__trigger {
+    display: block;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .map-card img,
+  .map-card__frame {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 1;
+  }
+
+  .map-card img {
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.88) contrast(0.95);
+  }
+
+  .map-card__frame {
+    border: 0;
+    display: none;
+  }
+
+  .map-card--loaded .map-card__trigger {
+    display: none;
+  }
+
+  .map-card--loaded .map-card__frame {
+    display: block;
+  }
+
+  .map-card__overlay {
+    position: absolute;
+    inset: auto 0 0 0;
+    background: linear-gradient(to top, rgba(9, 15, 31, 0.92), rgba(9, 15, 31, 0));
+    padding: 1.2rem;
+  }
+
+  .map-card__overlay span {
+    color: var(--text);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .map-card__hint {
+    margin-top: 0.8rem;
+    color: var(--muted);
+    font-size: 0.82rem;
+    text-align: center;
+  }
+
+  .map-card__hint a {
+    color: var(--accent2);
+    margin-left: 0.35rem;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 1080px) {
+    .map-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

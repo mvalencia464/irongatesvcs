@@ -1,0 +1,99 @@
+---
+interface Testimonial {
+  name: string;
+  city: string;
+  text: string;
+  rating: number;
+}
+
+interface Props {
+  testimonials: Testimonial[];
+  title?: string;
+}
+
+const { testimonials, title = "What Neighbors Are Saying" } = Astro.props;
+---
+
+<section class="testimonial-section">
+  <div class="section-header">
+    <span class="section-label">Real Feedback</span>
+    <h2>{title}</h2>
+  </div>
+
+  <div class="testimonial-grid">
+    {testimonials.map(item => (
+      <div class="testimonial-card panel-card u-hover-lift">
+        <div class="testimonial-stars">
+          {[...Array(5)].map((_, i) => (
+            <span class={i < item.rating ? "star star--active" : "star"}>★</span>
+          ))}
+        </div>
+        <p class="testimonial-text">"{item.text}"</p>
+        <div class="testimonial-footer">
+          <strong>{item.name}</strong>
+          <span>{item.city}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .testimonial-section {
+    width: 100%;
+  }
+
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .testimonial-card {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .testimonial-stars {
+    margin-bottom: 1rem;
+    color: var(--gold);
+    font-size: 1.2rem;
+  }
+
+  .star {
+    opacity: 0.2;
+  }
+
+  .star--active {
+    opacity: 1;
+  }
+
+  .testimonial-text {
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.7;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+
+  .testimonial-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .testimonial-footer strong {
+    color: var(--accent2);
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+  }
+
+  .testimonial-footer span {
+    color: var(--muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+</style>

@@ -1,0 +1,271 @@
+---
+// src/components/AboutSection.astro
+import { SITE } from '../config/site';
+import { r2img } from '../lib/r2';
+---
+
+<section id="about" class="section section--alt">
+  <div class="container about">
+
+    <div class="about__image">
+      <div class="about__image-frame">
+        <img
+          src={r2img(SITE.about.image)}
+          alt={`${SITE.name} team`}
+          loading="lazy"
+          width="580"
+          height="440"
+        />
+        <div class="about__overlay-badge">
+          {SITE.logoUrl ? (
+            <img
+              src={r2img(SITE.logoUrl)}
+              alt={SITE.name}
+              loading="lazy"
+              width="120"
+              height="32"
+            />
+          ) : (
+            <span class="about__wordmark">{SITE.name}</span>
+          )}
+          <div class="about__overlay-copy">
+            <strong>{SITE.owner.name}</strong>
+            <span>{SITE.owner.role}</span>
+          </div>
+        </div>
+      </div>
+      <div class="about__facts about__facts--image">
+        {SITE.about.facts.map(fact => (
+          <div class="fact">
+            <span class="fact__value">{fact.value}</span>
+            <span class="fact__label">{fact.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="about__content">
+      <span class="section-label">About Us</span>
+      <h2>{SITE.about.heading}</h2>
+      <p class="about__body">{SITE.about.body}</p>
+      <p class="about__body">{SITE.owner.story}</p>
+
+      <blockquote class="owner-quote">
+        <p>"{SITE.owner.quote}"</p>
+        <footer>{SITE.owner.name}, {SITE.owner.role}</footer>
+      </blockquote>
+
+      <div class="about__areas">
+        <p class="about__areas-label">Serving:</p>
+        <div class="area-tags">
+          {SITE.serviceAreas.map(area => (
+            <span class="area-tag">{area}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  @media (max-width: 800px) {
+    .about { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+
+  .about__image {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .about__image-frame {
+    position: relative;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    padding: 10px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .about__image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 22px 48px rgba(0,0,0,0.32);
+    border: none;
+    position: relative;
+    z-index: 2;
+  }
+
+  .about__overlay-badge {
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    border-radius: 10px;
+    background: rgba(8, 18, 37, 0.78);
+    backdrop-filter: blur(6px);
+  }
+
+  .about__overlay-badge img {
+    width: 92px;
+    height: auto;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    border: 0;
+    flex-shrink: 0;
+  }
+
+  .about__wordmark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text);
+    line-height: 1.15;
+    max-width: 11rem;
+    flex-shrink: 0;
+  }
+
+  .about__overlay-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.08rem;
+    min-width: 0;
+  }
+
+  .about__overlay-copy strong {
+    color: var(--text);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  .about__overlay-copy span {
+    color: var(--muted);
+    font-size: 0.72rem;
+    line-height: 1.25;
+  }
+
+  .about__facts--image {
+    position: relative;
+    z-index: 2;
+    padding: 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+
+  .about__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .about__content h2 {
+    color: var(--text);
+  }
+
+  .about__body {
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .about__facts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin: 0.5rem 0;
+  }
+
+  .owner-quote {
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+  }
+
+  .owner-quote p {
+    color: var(--text);
+    line-height: 1.65;
+    font-style: italic;
+    margin-bottom: 0.6rem;
+  }
+
+  .owner-quote footer {
+    color: var(--muted);
+    font-size: 0.78rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .fact {
+    display: flex;
+    flex-direction: column;
+    padding: 0.85rem;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  .fact__value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .fact__label {
+    font-size: 0.76rem;
+    color: rgba(242, 247, 255, 0.82);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.25rem;
+  }
+
+  .about__areas-label {
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    max-width: none;
+  }
+
+  .area-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .area-tag {
+    background: rgba(245, 158, 11, 0.08);
+    color: var(--text);
+    border: 1px solid var(--border);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.25rem 0.65rem;
+    border-radius: 2px;
+  }
+</style>

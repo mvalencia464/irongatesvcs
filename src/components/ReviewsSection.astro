@@ -1,0 +1,109 @@
+---
+// src/components/ReviewsSection.astro
+import { SITE } from '../config/site';
+---
+
+<section id="reviews" class="section">
+  <div class="container">
+
+    <div class="section-header">
+      <span class="section-label">What Customers Say</span>
+      <h2>Real Reviews from Florida Homeowners</h2>
+      <p>See why families across Florida trust us for roof repair, roof replacement, and storm recovery.</p>
+    </div>
+
+    <div class="reviews-grid">
+      {SITE.reviews.map((review) => (
+        <div class="review-card">
+          <div class="review-stars" aria-label={`${review.stars} out of 5 stars`}>
+            {'★'.repeat(review.stars)}{'☆'.repeat(5 - review.stars)}
+          </div>
+          <p class="review-text">"{review.text}"</p>
+          <div class="review-author">
+            <span class="review-name">{review.name}</span>
+            <span class="review-city">{review.city}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="reviews-footer">
+      <p>Read more reviews on <strong>Google</strong> and <strong>Facebook</strong></p>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .review-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.75rem;
+    box-shadow: 0 16px 30px rgba(0,0,0,0.24);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+  }
+
+  .review-card::before {
+    content: '"';
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 5rem;
+    line-height: 1;
+    color: rgba(255,255,255,0.06);
+    font-family: Georgia, serif;
+    pointer-events: none;
+  }
+
+  .review-stars {
+    color: var(--gold);
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+  }
+
+  .review-text {
+    color: var(--muted);
+    font-size: 0.98rem;
+    line-height: 1.65;
+    font-style: italic;
+    flex: 1;
+  }
+
+  .review-author {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+  }
+
+  .review-name {
+    font-weight: 700;
+    color: var(--text);
+    font-size: 0.95rem;
+  }
+
+  .review-city {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .reviews-footer {
+    text-align: center;
+    margin-top: 2.5rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+</style>

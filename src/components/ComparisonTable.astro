@@ -1,0 +1,116 @@
+---
+interface Row {
+  feature: string;
+  us: boolean | string;
+  them: boolean | string;
+}
+
+interface Props {
+  rows: Row[];
+  title?: string;
+  ourName?: string;
+  theirName?: string;
+}
+
+const { 
+  rows, 
+  title = "How We Compare", 
+  ourName = "Our Team", 
+  theirName = "The Others" 
+} = Astro.props;
+---
+
+<section class="comparison-section">
+  <div class="section-header">
+    <span class="section-label">Transparency</span>
+    <h2>{title}</h2>
+  </div>
+
+  <div class="comparison-wrapper panel-card">
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Service Standard</th>
+          <th class="col-highlight">{ourName}</th>
+          <th>{theirName}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map(row => (
+          <tr>
+            <td class="feature-name">{row.feature}</td>
+            <td class="col-highlight">
+              {typeof row.us === 'boolean' ? (
+                row.us ? <span class="check">✔</span> : <span class="cross">✘</span>
+              ) : row.us}
+            </td>
+            <td>
+              {typeof row.them === 'boolean' ? (
+                row.them ? <span class="check">✔</span> : <span class="cross">✘</span>
+              ) : row.them}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<style>
+  .comparison-section {
+    width: 100%;
+  }
+
+  .comparison-wrapper {
+    overflow-x: auto;
+    background: var(--panel);
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    min-width: 600px;
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .comparison-table th {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    color: var(--text);
+    letter-spacing: 0.05em;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .feature-name {
+    text-align: left;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .col-highlight {
+    background: rgba(91, 196, 232, 0.03);
+    color: var(--accent2);
+    font-weight: 600;
+  }
+
+  .check {
+    color: #4ade80;
+    font-size: 1.2rem;
+  }
+
+  .cross {
+    color: #f87171;
+    font-size: 1.2rem;
+    opacity: 0.5;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+</style>

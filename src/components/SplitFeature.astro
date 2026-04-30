@@ -1,0 +1,115 @@
+---
+import { r2img } from '../lib/r2';
+
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  flipped?: boolean;
+  buttonText?: string;
+  buttonHref?: string;
+  eyebrow?: string;
+}
+
+const { 
+  title, 
+  description, 
+  image, 
+  flipped = false, 
+  buttonText, 
+  buttonHref = "#",
+  eyebrow 
+} = Astro.props;
+---
+
+<div class={`split-feature ${flipped ? 'split-feature--flipped' : ''}`}>
+  <div class="split-feature__media">
+    <div class="split-feature__image-wrapper">
+      <img src={r2img(image)} alt={title} loading="lazy" />
+      <div class="split-feature__accent"></div>
+    </div>
+  </div>
+  <div class="split-feature__content">
+    {eyebrow && <span class="section-label">{eyebrow}</span>}
+    <h2>{title}</h2>
+    <p>{description}</p>
+    {buttonText && (
+      <a href={buttonHref} class="btn btn--primary">{buttonText}</a>
+    )}
+  </div>
+</div>
+
+<style>
+  .split-feature {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    width: 100%;
+  }
+
+  .split-feature--flipped {
+    direction: rtl;
+  }
+
+  .split-feature--flipped .split-feature__content {
+    direction: ltr;
+  }
+
+  .split-feature__media {
+    position: relative;
+  }
+
+  .split-feature__image-wrapper {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+  }
+
+  .split-feature__image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .split-feature__accent {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    pointer-events: none;
+  }
+
+  .split-feature__content h2 {
+    margin-bottom: 1.5rem;
+    max-width: 15ch;
+  }
+
+  .split-feature__content p {
+    color: var(--muted);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 960px) {
+    .split-feature {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    
+    .split-feature--flipped {
+      direction: ltr;
+    }
+
+    .split-feature__content {
+      order: 2;
+    }
+
+    .split-feature__media {
+      order: 1;
+    }
+  }
+</style>

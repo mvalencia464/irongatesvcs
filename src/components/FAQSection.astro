@@ -1,0 +1,82 @@
+---
+import { SITE } from '../config/site';
+
+const faqs = [
+  {
+    question: "What areas do you serve?",
+    answer: `IronGate Services LLC focuses on Tampa, Brandon, Riverview, and nearby Hillsborough County communities such as ${SITE.serviceAreas.slice(0, 4).join(", ")}.`,
+  },
+  {
+    question: "Do you offer drone roof inspections?",
+    answer:
+      "Yes. Aerial passes can reveal roof and structure issues before they become leaks—valuable for Florida homeowners and for documentation you can share with insurers or buyers.",
+  },
+  {
+    question: "Do you work with landlords and real estate investors?",
+    answer:
+      "Absolutely. Turnover maintenance, make-ready improvements, and preservation-style visits are part of our real estate support pillar.",
+  },
+  {
+    question: "How do I get a quote?",
+    answer:
+      `Call ${SITE.phone} for a free, no-obligation quote, or use the contact form. We keep communication clear and pricing transparent.`,
+  },
+  {
+    question: "What are your hours?",
+    answer: SITE.hoursLine,
+  },
+  {
+    question: "Typical handyman projects—what do you take on?",
+    answer:
+      "Common requests include TV mounting, ceiling fans, drywall repair, windows and doors, fixture swaps, and pressure washing. If it is not listed, ask—we will tell you honestly if we are the right fit.",
+  },
+];
+---
+
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">FAQ</span>
+      <h2>Questions, Answered</h2>
+      <p>Handyman, drone, and real estate support—what to expect before we step on site.</p>
+    </div>
+
+    <div class="faq-list">
+      {faqs.map((faq) => (
+        <details class="faq-item">
+          <summary>{faq.question}</summary>
+          <p>{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-list {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .faq-item {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--panel);
+    padding: 0.95rem 1.1rem;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    color: var(--text);
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .faq-item p {
+    margin-top: 0.65rem;
+    color: var(--muted);
+    font-size: 0.93rem;
+    line-height: 1.65;
+  }
+</style>

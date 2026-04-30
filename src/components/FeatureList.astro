@@ -1,0 +1,81 @@
+---
+interface Feature {
+  title: string;
+  description: string;
+  icon: string;
+}
+
+interface Props {
+  features: Feature[];
+  title?: string;
+}
+
+const { features, title = "Why Choose Us" } = Astro.props;
+---
+
+<section class="feature-section">
+  <div class="section-header">
+    <span class="section-label">The Advantage</span>
+    <h2>{title}</h2>
+  </div>
+
+  <div class="feature-grid">
+    {features.map(feature => (
+      <div class="feature-item">
+        <div class="feature-icon-box">
+          <span class="feature-icon">{feature.icon}</span>
+        </div>
+        <div class="feature-content">
+          <h3>{feature.title}</h3>
+          <p>{feature.description}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .feature-section {
+    width: 100%;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem 2rem;
+  }
+
+  .feature-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .feature-icon-box {
+    flex-shrink: 0;
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 1.5rem;
+    color: var(--accent2);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  }
+
+  .feature-content h3 {
+    font-size: 1.4rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .feature-content p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+</style>

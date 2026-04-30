@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config/site';
+---
+
+<BaseLayout title={`Terms of Service | ${SITE.name}`} description={`Terms of service for ${SITE.name}.`}>
+  <Header />
+  <main class="section legal-page">
+    <div class="container legal-content panel-card">
+      <span class="section-label">Legal</span>
+      <h1>Terms of Service</h1>
+      <p>Last updated: April 28, 2026</p>
+
+      <h2>Use of This Site</h2>
+      <p>By using this website, you agree to use it only for lawful purposes and to provide accurate information when submitting forms.</p>
+
+      <h2>Estimate Requests</h2>
+      <p>Submitting a request does not create a contract. Estimates, timelines, and scope are provided after project review and may vary by site conditions.</p>
+
+      <h2>SMS Communications</h2>
+      <p>If you opt in, {SITE.name} may send project and marketing text messages. Message frequency varies. Message and data rates may apply. Reply STOP to opt out.</p>
+
+      <h2>Intellectual Property</h2>
+      <p>All site content, branding, and media are owned by or licensed to {SITE.name} and may not be reused without written permission.</p>
+
+      <h2>Contact</h2>
+      <p>Questions about these terms: <a href={`mailto:${SITE.email}`}>{SITE.email}</a> or <a href={`tel:${SITE.phone.replace(/\D/g, '')}`}>{SITE.phone}</a>.</p>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .legal-page {
+    padding-top: 8rem;
+  }
+
+  .legal-content {
+    padding: 1.6rem;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .legal-content h1 {
+    margin-bottom: 0.6rem;
+    color: var(--text);
+  }
+
+  .legal-content h2 {
+    margin: 1.35rem 0 0.45rem;
+    color: var(--text);
+    font-size: 1.5rem;
+  }
+
+  .legal-content p {
+    color: var(--muted);
+    line-height: 1.7;
+  }
+</style>

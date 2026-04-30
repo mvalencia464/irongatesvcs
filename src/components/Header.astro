@@ -1,0 +1,162 @@
+---
+// src/components/Header.astro
+import { SITE } from '../config/site';
+
+interface Props {
+  logoImage?: string;
+}
+
+const logo = Astro.props.logoImage ?? SITE.logoUrl;
+---
+
+<header class="header">
+  <div class="container header__inner">
+    <a href="/" class="header__logo">
+      {logo ? (
+        <img src={logo} alt={SITE.name} loading="eager" width="420" height="110" />
+      ) : (
+        SITE.name
+      )}
+    </a>
+
+    <nav class="header__nav" aria-label="Main navigation">
+      {SITE.navLinks.map(link => (
+        <a href={link.href} class="header__link">{link.label}</a>
+      ))}
+    </nav>
+
+    <a href={`tel:${SITE.phone.replace(/\D/g,'')}`} class="btn btn--primary header__cta">
+      Call {SITE.phone}
+    </a>
+
+    <!-- Mobile hamburger -->
+    <button class="header__burger" id="burger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Mobile nav drawer -->
+  <div class="mobile-nav" id="mobileNav">
+    {SITE.navLinks.map(link => (
+      <a href={link.href} class="mobile-nav__link">{link.label}</a>
+    ))}
+    <a href={`tel:${SITE.phone.replace(/\D/g,'')}`} class="btn btn--primary" style="margin-top:1rem;">
+      Call Now
+    </a>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15, 23, 42, 0.88);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .header__logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.65rem;
+    font-weight: 400;
+    color: var(--text);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    margin-right: auto;
+  }
+
+  .header__logo img {
+    width: clamp(90px, 11vw, 132px);
+    height: auto;
+    display: block;
+  }
+
+  .header__nav {
+    display: flex;
+    gap: 1.75rem;
+  }
+
+  .header__link {
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .header__link:hover { color: var(--text); }
+
+  .header__cta { font-size: 0.72rem; padding: 0.65rem 1rem; }
+
+  .header__burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .header__burger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+
+  /* Mobile nav drawer */
+  .mobile-nav {
+    display: none;
+    flex-direction: column;
+    padding: 1rem 1.5rem 1.5rem;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+  }
+
+  .mobile-nav__link {
+    color: var(--muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+  }
+
+  .mobile-nav.is-open { display: flex; }
+
+  @media (max-width: 900px) {
+    .header__nav { display: none; }
+    .header__cta { display: none; }
+    .header__burger { display: flex; }
+  }
+</style>
+
+<script>
+  const burger = document.getElementById('burger');
+  const mobileNav = document.getElementById('mobileNav');
+  burger?.addEventListener('click', () => {
+    mobileNav?.classList.toggle('is-open');
+  });
+  // Close on link click
+  mobileNav?.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => mobileNav.classList.remove('is-open'));
+  });
+</script>
