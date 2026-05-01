@@ -6,24 +6,8 @@ const mapQuery = encodeURIComponent(`${SITE.address}, ${SITE.city}, ${SITE.state
 const mapsKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY as string | undefined;
 const mapId = import.meta.env.PUBLIC_GOOGLE_MAP_ID as string | undefined;
 
-const staticMapStyles = [
-  'feature:all|element:labels.text.fill|color:0xf2f7ff',
-  'feature:all|element:labels.text.stroke|color:0x0a1428',
-  'feature:road|element:geometry|color:0x1e335d',
-  'feature:water|element:geometry|color:0x122447',
-  'feature:landscape|element:geometry|color:0x0b1833',
-  'feature:poi|element:all|visibility:off',
-  'feature:transit|element:all|visibility:off',
-  'feature:administrative|element:geometry.stroke|color:0x274779',
-];
-
-const staticStyleQuery = staticMapStyles
-  .map((style) => `style=${encodeURIComponent(style)}`)
-  .join('&');
-
-const staticMapSrc = mapsKey
-  ? `https://maps.googleapis.com/maps/api/staticmap?center=${mapQuery}&zoom=9&size=1280x640&scale=2&maptype=roadmap&markers=color:0xf59e0b%7C${mapQuery}${mapId ? `&map_id=${mapId}` : `&${staticStyleQuery}`}&key=${mapsKey}`
-  : r2img(SITE.map.image);
+/** Hosted preview image (replaces Google Static Maps API for the thumbnail). */
+const staticMapSrc = 'https://media.stokeleads.com/irongatesvcs/static-map.avif';
 
 const embedMapSrc = mapsKey
   ? `https://www.google.com/maps/embed/v1/place?key=${mapsKey}&q=${mapQuery}&zoom=9${mapId ? `&map_id=${mapId}` : ''}`

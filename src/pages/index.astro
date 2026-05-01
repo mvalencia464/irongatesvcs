@@ -31,6 +31,21 @@ const transformationGalleryProjects = [
   { title: 'Wall fixture install', category: 'Handyman', image: `${IG}/wall_mounted_light_fixture_with_textured_wall_background_ (1).avif` },
 ];
 
+const droneServiceGallery = [
+  { title: 'Luxury Waterfront Estate', category: 'Drone', image: `${IG}/drone-1.avif` },
+  { title: 'Residential Property Shot', category: 'Drone', image: `${IG}/drone-2.avif` },
+  { title: 'Golf Course Community', category: 'Drone', image: `${IG}/drone-3.avif` },
+  { title: 'Oceanfront Skyline', category: 'Drone', image: `${IG}/drone-4.avif` },
+  { title: 'Infrastructure Inspection', category: 'Drone', image: `${IG}/drone-5.avif` },
+  { title: 'Planned Community Overview', category: 'Drone', image: `${IG}/drone-6.avif` },
+  { title: 'Commercial Site Map', category: 'Drone', image: `${IG}/drone-7.avif` },
+  { title: 'Solar Energy Assessment', category: 'Drone', image: `${IG}/drone-8.avif` },
+  { title: 'Residential Development Progress', category: 'Drone', image: `${IG}/drone-9.avif` },
+  { title: 'Coastal Sunset View', category: 'Drone', image: `${IG}/drone-10.avif` },
+  { title: 'Master-Planned Community', category: 'Drone', image: `${IG}/drone-11.avif` },
+  { title: 'Vacant Land Survey', category: 'Drone', image: `${IG}/drone-12.avif` },
+];
+
 ---
 
 <BaseLayout>
@@ -62,7 +77,16 @@ const transformationGalleryProjects = [
     <AboutSection />
     <section class="section">
       <div class="container">
-        <RecentWork projects={transformationGalleryProjects} />
+        <RecentWork projects={transformationGalleryProjects} title="Recent project work" />
+      </div>
+    </section>
+    <section class="section section--alt">
+      <div class="container">
+        <RecentWork
+          projects={droneServiceGallery}
+          sectionLabel="Drone services"
+          title="Aerial inspections & property views"
+        />
       </div>
     </section>
     <ReviewsSection />

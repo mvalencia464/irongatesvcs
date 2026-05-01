@@ -10,14 +10,16 @@ interface Project {
 interface Props {
   projects: Project[];
   title?: string;
+  /** Eyebrow label above the title (default: Gallery) */
+  sectionLabel?: string;
 }
 
-const { projects, title = "Recent Transformations" } = Astro.props;
+const { projects, title = "Recent Transformations", sectionLabel = "Gallery" } = Astro.props;
 ---
 
 <section class="work-section">
   <div class="section-header">
-    <span class="section-label">Gallery</span>
+    <span class="section-label">{sectionLabel}</span>
     <h2>{title}</h2>
   </div>
 
@@ -83,11 +85,11 @@ const { projects, title = "Recent Transformations" } = Astro.props;
   }
 
   .work-card:hover .work-overlay {
-    background: linear-gradient(0deg, rgba(91, 196, 232, 0.4) 0%, rgba(6, 13, 20, 0.2) 100%);
+    background: linear-gradient(0deg, rgba(245, 158, 11, 0.35) 0%, rgba(15, 23, 42, 0.2) 100%);
   }
 
   .work-category {
-    color: var(--accent2);
+    color: var(--accent);
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.15em;
