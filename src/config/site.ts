@@ -61,7 +61,7 @@ export const SITE = {
     subheading:
       "Your local partner for property excellence. Whether you need a dependable repair, aerial documentation, or investor-ready turnover work, IronGate Services LLC combines craftsmanship with modern drone technology across Tampa, Brandon, and Riverview.",
     ctaText: "Call for a Free Quote",
-    image: `${IG}/modern_tiled_shower_with_glass_door_and_window_showing_outdoor_greenery_ (1).avif`,
+    image: `${IG}/drone-2.avif`,
     badges: ["Handyman & Repairs", "Drone Inspections & Media", "Real Estate Support"],
     trustItems: [
       { strong: "4.9/5 Rating", rest: "on Google & Facebook" },
