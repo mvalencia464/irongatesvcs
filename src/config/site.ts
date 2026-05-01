@@ -6,6 +6,9 @@
 
 const IG = "https://media.stokeleads.com/irongatesvcs";
 
+/** Interior showcase — handyman service card, about, split feature, gallery lead, map fallback, etc. */
+const handymanShowcase = `${IG}/handyman-bathroom.avif`;
+
 export const SITE = {
   // ── Business Info ──────────────────────────────────────────
   name: "IronGate Services LLC",
@@ -38,6 +41,11 @@ export const SITE = {
 
   // ── Cloudflare R2 ──────────────────────────────────────────
   r2Folder: "irongatesvcs",
+
+  /** Reusable media URLs (full URLs work with `r2img`) */
+  media: {
+    handymanShowcase,
+  },
 
   // ── SEO ────────────────────────────────────────────────────
   seoTitle: "IronGate Services LLC | Handyman, Drone & Real Estate Support | Tampa, Brandon & Riverview",
@@ -82,7 +90,7 @@ export const SITE = {
       shortDesc: "Repairs, installations, and maintenance you can count on.",
       fullDesc:
         "Professional maintenance to keep your home or rental in peak condition. From TV mounting and ceiling fans to drywall repair, windows and doors, and pressure washing—we focus on workmanship you can see and fixes that last. Florida humidity and daily wear create small problems fast; we catch them early so they do not become expensive surprises.",
-      image: `${IG}/modern_bathroom_with_glass_shower_and_tools_on_the_sink_ (1).avif`,
+      image: handymanShowcase,
       icon: "HM",
       highlights: [
         "TV mounting, fans, fixtures, and trim details",
@@ -96,7 +104,7 @@ export const SITE = {
       shortDesc: "Aerial inspections, property shots, and progress reports.",
       fullDesc:
         "Cutting-edge aerial views for inspections and marketing. Drone passes can reveal roof and structure issues before they become leaks—especially valuable for Florida homeowners and insurance documentation. We also capture real estate photography and construction progress so you always have a clear record from above.",
-      image: `${IG}/close_up_of_three_white_bathroom_light_fixtures_above_a_mirror_.avif`,
+      image: `${IG}/drone-5.avif`,
       icon: "DR",
       highlights: [
         "Roof and structure inspection flights",
@@ -110,7 +118,7 @@ export const SITE = {
       shortDesc: "Property maintenance, improvements, and investment support.",
       fullDesc:
         "Specialized services to protect and enhance your investment. Turnover maintenance, ROI-focused improvements, and property preservation help landlords and investors maximize returns, reduce vacancy, and keep units rent-ready without guesswork.",
-      image: `${IG}/wall_mounted_light_fixture_with_textured_wall_background_ (1).avif`,
+      image: `${IG}/drone-11.avif`,
       icon: "RE",
       highlights: [
         "Turnover maintenance and make-ready work",
@@ -125,7 +133,7 @@ export const SITE = {
     heading: "Local Partner. Modern Tools. Neighborly Service.",
     body:
       "IronGate Services LLC is built for homeowners who want dependable repairs and for investors who need a responsive team on the ground. We combine traditional handyman craftsmanship with drone technology so you see the full picture—then we execute with integrity and speed.",
-    image: `${IG}/three_white_glass_light_fixtures_mounted_on_a_textured_wall_above_a_mirror_ (1).avif`,
+    image: handymanShowcase,
     facts: [
       { label: "Owner-Operator", value: "Zachary Philemon" },
       { label: "Core Services", value: "3 Pillars" },
@@ -200,7 +208,7 @@ export const SITE = {
   map: {
     title: "Find Us on Google Maps",
     subtitle: "7227 Sweet Alyssum Court, Tampa — serving Tampa, Brandon, Riverview, and nearby areas.",
-    image: `${IG}/modern_bathroom_with_glass_shower_and_tools_on_the_sink_ (1).avif`,
+    image: handymanShowcase,
     link: "https://www.google.com/maps/search/?api=1&query=7227+Sweet+Alyssum+Court+Tampa+FL",
   },
 
