@@ -14,7 +14,7 @@ export const SITE = {
   name: "IronGate Services LLC",
   tagline: "Built on Quality. Focused on You.",
   phone: "(813) 658-8333",
-  email: "hello@irongateservicesllc.com",
+  email: "services@irongatesvcs.com",
   /** Street + city line for footer; JSON-LD uses structured fields below */
   address: "7227 Sweet Alyssum Court, Tampa, FL",
   addressLine1: "7227 Sweet Alyssum Court",
