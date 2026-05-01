@@ -7,14 +7,13 @@ import TeamGrid from '../components/TeamGrid.astro';
 import MapSection from '../components/MapSection.astro';
 import { SITE } from '../config/site';
 
-const IG = "https://media.stokeleads.com/irongatesvcs";
 const teamMembers = [
   {
     name: SITE.owner.name,
     role: SITE.owner.role,
     image:
       SITE.owner.headshot ||
-      `${IG}/modern_bathroom_with_glass_shower_and_tools_on_the_sink_ (1).avif`,
+      SITE.media.handymanShowcase,
   },
 ];
 ---

@@ -13,6 +13,7 @@ import FAQSection from '../components/FAQSection.astro';
 import Footer from '../components/Footer.astro';
 import SplitFeature from '../components/SplitFeature.astro';
 import RecentWork from '../components/RecentWork.astro';
+import { SITE } from '../config/site';
 
 const IG = "https://media.stokeleads.com/irongatesvcs";
 
@@ -24,6 +25,7 @@ const workProcessSteps = [
 ];
 
 const transformationGalleryProjects = [
+  { title: 'Featured bath finish', category: 'Handyman', image: SITE.media.handymanShowcase },
   { title: 'Bathroom lighting detail', category: 'Handyman', image: `${IG}/close_up_of_three_white_bathroom_light_fixtures_above_a_mirror_.avif` },
   { title: 'Tiled shower upgrade', category: 'Handyman', image: `${IG}/modern_tiled_shower_with_glass_door_and_window_showing_outdoor_greenery_ (1).avif` },
   { title: 'Vanity & mirror lighting', category: 'Handyman', image: `${IG}/three_white_glass_light_fixtures_mounted_on_a_textured_wall_above_a_mirror_ (1).avif` },
@@ -59,7 +61,7 @@ const droneServiceGallery = [
           eyebrow="Free quote"
           title="Call for a Free, No-Obligation Quote"
           description="Whether it is a repair list, aerial documentation, or turnover work on a rental, we respond with honest recommendations and transparent pricing."
-          image={`${IG}/modern_bathroom_with_glass_shower_and_tools_on_the_sink_ (1).avif`}
+          image={SITE.media.handymanShowcase}
           buttonText="Contact IronGate"
           buttonHref="#contact"
         />
