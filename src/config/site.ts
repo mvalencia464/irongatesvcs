@@ -23,7 +23,7 @@ export const SITE = {
   /** Optional contractor license number; leave empty to hide on hero */
   licenseNumber: "",
   /** Public logo; leave empty to show text wordmark in header/footer */
-  logoUrl: "",
+  logoUrl: `${IG}/logo.avif`,
 
   // ── Branding (Primary #0F172A, Secondary #94A3B8, Tertiary #F59E0B, Neutral #1E293B) ──
   palette: {
