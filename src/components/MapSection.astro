@@ -1,6 +1,6 @@
 ---
 import { SITE } from '../config/site';
-import { r2img } from '../lib/r2';
+import { r2img, r2srcset } from '../lib/r2';
 
 const mapQuery = encodeURIComponent(`${SITE.address}, ${SITE.city}, ${SITE.state}`);
 const mapsKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY as string | undefined;
@@ -38,9 +38,12 @@ const embedMapSrc = mapsKey
           <button type="button" class="map-card__trigger" data-map-trigger aria-label="Load interactive Google Map">
             <img
               src={staticMapSrc}
+              srcset={r2srcset(staticMapSrc, [480, 768, 1024, 1280])}
+              sizes="(max-width: 1080px) 100vw, 724px"
               data-fallback-src={r2img(SITE.map.image)}
               alt={`Static map preview of ${SITE.name} service area`}
               loading="lazy"
+              decoding="async"
               width="1280"
               height="640"
             />

@@ -1,6 +1,7 @@
 ---
 // src/components/Header.astro
 import { SITE } from '../config/site';
+import { r2img, r2srcset } from '../lib/r2';
 
 interface Props {
   logoImage?: string;
@@ -13,7 +14,17 @@ const logo = Astro.props.logoImage ?? SITE.logoUrl;
   <div class="container header__inner">
     <a href="/" class="header__logo">
       {logo ? (
-        <img src={logo} alt={SITE.name} loading="eager" width="420" height="110" />
+        <img
+          src={r2img(logo)}
+          srcset={r2srcset(logo, [96, 128, 160, 192, 256, 384])}
+          sizes="132px"
+          alt={SITE.name}
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          width="132"
+          height="126"
+        />
       ) : (
         SITE.name
       )}

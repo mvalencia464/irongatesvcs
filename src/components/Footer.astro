@@ -1,6 +1,7 @@
 ---
 // src/components/Footer.astro
 import { SITE } from '../config/site';
+import { r2img, r2srcset } from '../lib/r2';
 ---
 
 <footer class="footer">
@@ -9,11 +10,14 @@ import { SITE } from '../config/site';
       {SITE.logoUrl ? (
         <img
           class="footer__logo"
-          src={SITE.logoUrl}
+          src={r2img(SITE.logoUrl)}
+          srcset={r2srcset(SITE.logoUrl, [96, 128, 160, 192, 256, 384])}
+          sizes="(max-width: 600px) 130px, 130px"
           alt={SITE.name}
           loading="lazy"
-          width="420"
-          height="110"
+          decoding="async"
+          width="130"
+          height="123"
         />
       ) : (
         <p class="footer__name">{SITE.name}</p>

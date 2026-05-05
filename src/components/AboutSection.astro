@@ -1,7 +1,7 @@
 ---
 // src/components/AboutSection.astro
 import { SITE } from '../config/site';
-import { r2img } from '../lib/r2';
+import { r2img, r2srcset } from '../lib/r2';
 ---
 
 <section id="about" class="section section--alt">
@@ -20,10 +20,13 @@ import { r2img } from '../lib/r2';
           {SITE.logoUrl ? (
             <img
               src={r2img(SITE.logoUrl)}
+              srcset={r2srcset(SITE.logoUrl, [96, 128, 160, 192, 256])}
+              sizes="92px"
               alt={SITE.name}
               loading="lazy"
-              width="120"
-              height="32"
+              decoding="async"
+              width="92"
+              height="88"
             />
           ) : (
             <span class="about__wordmark">{SITE.name}</span>

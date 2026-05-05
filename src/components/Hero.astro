@@ -1,7 +1,7 @@
 ---
 // src/components/Hero.astro
 import { SITE } from '../config/site';
-import { r2img } from '../lib/r2';
+import { r2img, r2srcset } from '../lib/r2';
 import HeroEstimateForm from './HeroEstimateForm.astro';
 ---
 
@@ -9,6 +9,8 @@ import HeroEstimateForm from './HeroEstimateForm.astro';
   <img
     class="hero__bg"
     src={r2img(SITE.hero.image)}
+    srcset={r2srcset(SITE.hero.image, [480, 768, 1024, 1536, 1920])}
+    sizes="100vw"
     alt=""
     loading="eager"
     fetchpriority="high"
