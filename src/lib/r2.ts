@@ -7,7 +7,6 @@ import { SITE } from '../config/site';
 const DEFAULT_R2_BASE = 'https://media.stokeleads.com';
 const R2_BASE = (import.meta.env.R2_BASE_URL as string | undefined) || DEFAULT_R2_BASE;
 const R2_FOLDER = import.meta.env.R2_SITE_FOLDER as string | undefined;
-const CAN_USE_CF_IMAGE_RESIZE = !import.meta.env.DEV;
 
 /**
  * Builds a full R2 URL for an image path.
@@ -38,16 +37,5 @@ export function r2img(path: string): string {
  * Useful if you're not using Astro's <Image /> component.
  */
 export function r2srcset(path: string, widths: number[] = [640, 1024, 1600]): string {
-  const sourceUrl = r2img(path);
-  return widths.map((width) => `${r2variant(sourceUrl, width)} ${width}w`).join(', ');
-}
-
-function r2variant(sourceUrl: string, width: number): string {
-  if (!CAN_USE_CF_IMAGE_RESIZE) {
-    // Local dev fallback when /cdn-cgi/image is unavailable.
-    return `${sourceUrl}?width=${width}`;
-  }
-
-  const encodedSource = encodeURI(sourceUrl);
-  return `/cdn-cgi/image/format=auto,width=${width},quality=62/${encodedSource}`;
+  return widths.map(w => `${r2img(path)}?width=${w} ${w}w`).join(', ');
 }
